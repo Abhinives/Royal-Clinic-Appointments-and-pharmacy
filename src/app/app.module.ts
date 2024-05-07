@@ -19,6 +19,7 @@ import { MatInputModule } from '@angular/material/input';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import {MatTabsModule} from '@angular/material/tabs';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import { SignupComponent } from './signup/signup.component';
     MatInputModule,
     MatIconModule,
     MatButtonModule,
+    MatTabsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
