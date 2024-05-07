@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { HttpClientModule } from '@angular/common/http';
 import { MatRadioModule } from '@angular/material/radio';
@@ -16,6 +17,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
+import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -28,6 +30,7 @@ import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { BookingComponent } from './booking/booking.component';
 import { DialogComponent } from './dialog/dialog.component';
+import { ServicesComponent } from './services/services.component';
 
 
 @NgModule({
@@ -40,6 +43,7 @@ import { DialogComponent } from './dialog/dialog.component';
     HeaderComponent,
     BookingComponent,
     DialogComponent,
+    ServicesComponent,
 
   ],
   imports: [
@@ -53,7 +57,9 @@ import { DialogComponent } from './dialog/dialog.component';
     BrowserAnimationsModule,
     MatSelectModule,
     MatDialogModule,
+    MatCardModule,
     MatDatepickerModule,
+    MatMenuModule,
     MatSidenavModule,
     MatDividerModule,
     MatStepperModule,

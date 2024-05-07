@@ -1,11 +1,21 @@
 <div
-  class="bg-gradient-to-r py-10 from-teal-50 to-teal-200 h-full w-full flex justify-center items-center"
+  class="bg-gradient-to-r py-10 from-teal-50 to-teal-200 min-h-full w-full flex flex-col items-center"
 >
+  <div class="w-full ml-80 mt-5 mb-10 flex flex-col items-start">
+    <div>
+      <span class="text-4xl font-bold font2">Medical Appointment</span>
+    </div>
+    <div>
+      <span class="font2 text-red-500 font-semibold"
+        >Home / medical-appointment</span
+      >
+    </div>
+  </div>
   <div
     [formGroup]="bookingFormGroup"
     class="bg-gray-50 shadow-lg w-4/5 flex flex-col justify-center items-center rounded-lg"
   >
-    <div class="font1 font-semibold text-2xl text-teal-800 my-6">
+    <div class="font1 font-bold text-2xl text-teal-800 my-6">
       Book Appointment
     </div>
     <mat-divider class="text-black w-5/6"></mat-divider>
