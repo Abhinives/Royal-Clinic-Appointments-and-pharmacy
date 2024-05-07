@@ -1,0 +1,184 @@
+<div
+  class="bg-gradient-to-r py-10 from-teal-50 to-teal-200 h-full w-full flex justify-center items-center"
+>
+  <div
+    [formGroup]="bookingFormGroup"
+    class="bg-gray-50 shadow-lg w-4/5 flex flex-col justify-center items-center rounded-lg"
+  >
+    <div class="font1 font-semibold text-2xl text-teal-800 my-6">
+      Book Appointment
+    </div>
+    <mat-divider class="text-black w-5/6"></mat-divider>
+    <div class="w-5/6">
+      <mat-stepper
+        class="w-full"
+        orientation="vertical"
+        [linear]="true"
+        #stepper
+      >
+        <mat-step
+          class=""
+          label="Fill the form"
+          [stepControl]="bookingFormGroup"
+        >
+          <div class="grid grid-cols-2">
+            <mat-form-field class="col-span-1 my-4 mr-4">
+              <mat-label>First Name </mat-label>
+              <input formControlName="firstName" type="text" matInput />
+              <mat-error
+                *ngIf="bookingFormGroup.get('firstName')?.hasError('required')"
+                >First Name is required</mat-error
+              >
+            </mat-form-field>
+            <mat-form-field class="col-span-1 my-4 mr-4">
+              <mat-label>Last Name </mat-label>
+              <input formControlName="lastName" type="text" matInput />
+              <mat-error
+                *ngIf="bookingFormGroup.get('lastName')?.hasError('required')"
+                >Last Name is required</mat-error
+              >
+            </mat-form-field>
+
+            <mat-form-field class="col-span-1 my-4 mr-4">
+              <mat-label>Gender </mat-label>
+              <mat-select formControlName="gender">
+                <mat-option value="male">Male</mat-option>
+                <mat-option value="female">Female</mat-option>
+              </mat-select>
+              <mat-error
+                *ngIf="bookingFormGroup.get('gender')?.hasError('required')"
+                >Gender is required</mat-error
+              >
+            </mat-form-field>
+
+            <mat-form-field class="col-span-1 my-4 mr-4">
+              <mat-label>Age </mat-label>
+              <input formControlName="age" type="number" matInput />
+              <mat-error
+                *ngIf="bookingFormGroup.get('age')?.hasError('required')"
+                >Age is required</mat-error
+              >
+            </mat-form-field>
+            <mat-form-field class="col-span-1 my-4 mr-4">
+              <mat-label>Email </mat-label>
+              <input formControlName="email" type="text" matInput />
+              <mat-error
+                *ngIf="bookingFormGroup.get('email')?.hasError('required')"
+                >Email is required</mat-error
+              >
+              <mat-error
+                *ngIf="
+                  !bookingFormGroup.get('email')?.hasError('required') &&
+                  bookingFormGroup.get('email')?.hasError('invalidEmail')
+                "
+                >Please enter a valid email address</mat-error
+              >
+            </mat-form-field>
+            <mat-form-field class="col-span-1 my-4 mr-4">
+              <mat-label>Choose the Specialist </mat-label>
+              <mat-select formControlName="specialist">
+                <mat-option [value]="name" *ngFor="let name of specialist">{{
+                  name
+                }}</mat-option>
+              </mat-select>
+              <mat-error
+                *ngIf="bookingFormGroup.get('specialist')?.hasError('required')"
+                >Specialist field is required</mat-error
+              >
+            </mat-form-field>
+            <mat-form-field class="col-span-1 my-4 mr-4">
+              <mat-label>Choose the Doctor </mat-label>
+              <mat-select formControlName="doctorName">
+                <mat-option [value]="name" *ngFor="let name of doctors">{{
+                  name
+                }}</mat-option>
+              </mat-select>
+              <mat-error
+                *ngIf="bookingFormGroup.get('doctorName')?.hasError('required')"
+                >Doctor name is required</mat-error
+              >
+            </mat-form-field>
+            <mat-form-field class="col-span-1 my-4 mr-4">
+              <mat-label>Phone </mat-label>
+              <input formControlName="phone" type="text" matInput />
+              <mat-error
+                *ngIf="bookingFormGroup.get('phone')?.hasError('required')"
+                >Phone number is required</mat-error
+              >
+              <mat-error
+                *ngIf="
+                  !bookingFormGroup.get('phone')?.hasError('required') &&
+                  bookingFormGroup.get('phone')?.hasError('invalidPhone')
+                "
+                >Please enter valid Phone number</mat-error
+              >
+            </mat-form-field>
+            <mat-form-field class="col-span-1 my-4 mr-4">
+              <mat-label>Choose a date </mat-label>
+              <input
+                formControlName="date"
+                matInput
+                [matDatepicker]="picker"
+                [matDatepickerFilter]="myFilter"
+              />
+              <mat-error
+                *ngIf="bookingFormGroup.get('date')?.hasError('required')"
+                >Date is required</mat-error
+              >
+              <mat-datepicker-toggle
+                matIconSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker touchUi #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="col-span-1 my-4 mr-4">
+              <mat-label>Consulting Fee (Rs)</mat-label>
+              <input disabled type="number" matInput value="100" />
+            </mat-form-field>
+          </div>
+        </mat-step>
+        <mat-step label="Choose Slot">
+          <mat-accordion class="col-span-2 mb-8 mt-2 mr-4 bg-gray-100">
+            <mat-expansion-panel hideToggle class="p-3">
+              <mat-expansion-panel-header class="">
+                <mat-panel-title class="flex flex-row">
+                  <div class="flex flex-col w-full">
+                    <div class="flex items-center w-full mt-3 mb-3">
+                      <span class="mr-5">Available Slots:</span>
+
+                      <div class="h-2 w-2 rounded bg-teal-500"></div>
+                      <span class="text-gray-600 mx-1">Available</span>
+                      <div class="h-2 w-2 rounded bg-red-500 ml-3"></div>
+                      <span class="text-gray-600 mx-1">Occupied</span>
+                    </div>
+                  </div>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div>
+                <mat-divider class="w-full"></mat-divider>
+              </div>
+              <div class="grid grid-cols-4 my-4">
+                <button
+                  (click)="openDialog()"
+                  [disabled]="!slot.isAvailable"
+                  [ngClass]="{
+                    '!bg-teal-500': slot.isAvailable,
+                    '!bg-red-500': !slot.isAvailable,
+                    'cursor-no-drop': !slot.isAvailable
+                  }"
+                  *ngFor="let slot of slots"
+                  mat-flat-button
+                  class="!text-white rounded col-span-1 mr-3 my-2"
+                >
+                  {{ slot.time }}
+                </button>
+              </div>
+
+              <div></div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </mat-step>
+      </mat-stepper>
+    </div>
+  </div>
+</div>
