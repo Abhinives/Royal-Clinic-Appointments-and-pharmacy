@@ -1,0 +1,27 @@
+<mat-toolbar class="">
+  <img class="h-10" src="../../assets/logo.png" />
+
+  <span class="text-teal-600 mx-4">Royal Clinic</span>
+  <span class="example-spacer"></span>
+  <div class="text-sm text-gray-600 flex items-center flex-row">
+    <div class="mx-4">
+      <span routerLink="/" class="cursor-pointer hover:text-teal-500 transition"
+        >Home</span
+      >
+    </div>
+    <div class="mx-4">
+      <span class="cursor-pointer hover:text-teal-500 transition"
+        >About us</span
+      >
+    </div>
+    <div class="mx-4">
+      <button
+        routerLink="/login"
+        mat-flat-button
+        class="!bg-teal-500 !text-white !rounded-full"
+      >
+        Login
+      </button>
+    </div>
+  </div>
+</mat-toolbar>
