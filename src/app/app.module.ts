@@ -18,6 +18,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
+import {MatTabsModule} from '@angular/material/tabs';
 
 
 @NgModule({
@@ -25,6 +27,7 @@ import { LoginComponent } from './login/login.component';
     AppComponent,
     HomeComponent,
     LoginComponent,
+    SignupComponent,
 
   ],
   imports: [
@@ -42,6 +45,7 @@ import { LoginComponent } from './login/login.component';
     MatInputModule,
     MatIconModule,
     MatButtonModule,
+    MatTabsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
