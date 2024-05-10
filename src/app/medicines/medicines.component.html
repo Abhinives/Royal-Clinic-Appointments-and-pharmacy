@@ -1,0 +1,64 @@
+<div
+  class="bg-gradient-to-r py-10 from-teal-50 to-teal-200 min-h-full w-full flex flex-col items-center"
+>
+  <div
+    class="w-4/5 bg-gradient-to-r from-teal-100 to-white rounded px-20 pt-10 pb-20 shadow-lg"
+  >
+    <div class="flex justify-between items-center">
+      <div class="w-full mt-5 mb-5 flex flex-col">
+        <div>
+          <span class="text-4xl font-bold font2">Medicines</span>
+        </div>
+        <div>
+          <span class="font2 text-red-500 font-semibold"
+            >Home / Services / Medicines</span
+          >
+        </div>
+      </div>
+      <div class="w-1/4">
+        <button
+          (click)="openCart()"
+          [matBadgeHidden]="cartItems.length == 0"
+          [matBadge]="cartItems.length"
+          matBadgeColor="accent"
+          class="w-full !rounded-full"
+          mat-stroked-button
+          color="primary"
+        >
+          View Cart<mat-icon>shopping_cart</mat-icon>
+        </button>
+      </div>
+    </div>
+    <mat-divider class="mb-10"></mat-divider>
+    <div class="my-3 w-full">
+      <mat-form-field class="w-1/2 rounded-lg custom-mat">
+        <mat-label>Search Medicines</mat-label>
+        <input matInput type="text" class="custom-mat" />
+      </mat-form-field>
+    </div>
+    <div class="flex justify-start w-full mt-10">
+      <div class="grid grid-cols-4 w-full relative left-14">
+        <div
+          *ngFor="let med of medicines; let i = index"
+          class="cursor-pointer"
+          (click)="openProduct(i)"
+        >
+          <div
+            class="h-44 bg-white w-44 border-2 border-gray-200 rounded col-span-1 p-2 hover:shadow-lg cursor-pointer"
+          >
+            <img src="../../assets//paracetomol.png" class="h-40" />
+          </div>
+          <div>
+            <span class="text-black font1 font-semibold text-lg">{{
+              med.name
+            }}</span>
+          </div>
+          <div class="text-sm text-gray-400 font2 font-medium">MRP</div>
+          <div class="text-lg text-black font2 font-medium">
+            ₹{{ med.cost }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -8,6 +8,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { HttpClientModule } from '@angular/common/http';
 import { MatRadioModule } from '@angular/material/radio';
@@ -16,8 +19,10 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
+import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { HomeComponent } from './home/home.component';
@@ -28,6 +33,12 @@ import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { BookingComponent } from './booking/booking.component';
 import { DialogComponent } from './dialog/dialog.component';
+import { ServicesComponent } from './services/services.component';
+import { MedicinesComponent } from './medicines/medicines.component';
+import { MedicinesDialogComponent } from './medicines-dialog/medicines-dialog.component';
+import { CartComponent } from './cart/cart.component';
+import { MyordersComponent } from './myorders/myorders.component';
+import { MyappointmentsComponent } from './myappointments/myappointments.component';
 
 
 @NgModule({
@@ -40,20 +51,31 @@ import { DialogComponent } from './dialog/dialog.component';
     HeaderComponent,
     BookingComponent,
     DialogComponent,
+    ServicesComponent,
+    MedicinesComponent,
+    MedicinesDialogComponent,
+    CartComponent,
+    MyordersComponent,
+    MyappointmentsComponent,
 
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
+    MatSnackBarModule,
     HttpClientModule,
     MatExpansionModule,
+    MatTableModule,
     MatChipsModule,
+    MatBadgeModule,
     MatRadioModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatSelectModule,
     MatDialogModule,
+    MatCardModule,
     MatDatepickerModule,
+    MatMenuModule,
     MatSidenavModule,
     MatDividerModule,
     MatStepperModule,
