@@ -1,189 +1,233 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title></title>
-</head>
-<body>
-  <div class="min-h-screen flex items-center justify-center ">
-    <div class="bg-white h-auto max-w-md w-full mt-10">
-  <mat-tab-group>
-    <mat-tab label="Doctor">
-  <div class="flex justify-center items-center h-screen">
-    <div class="bg-white-500 border-solid border-2 border-black-600 max-w-md -mt-32 px-11 py-10">
-      <p class="py-1 text-3xl">SIGNUP</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+  </head>
+  <body>
+    <div
+      class="min-h-full bg-gradient-to-r py-10 from-teal-50 to-teal-200 flex items-center justify-center"
+    >
+      <div class="bg-white h-full max-w-md w-full">
+        <mat-tab-group>
+          <mat-tab label="Doctor">
+            <div class="flex justify-center items-center">
+              <div
+                class="bg-white-500 border-solid border-2 border-black-600 max-w-md px-11 py-10"
+              >
+                <p class="py-1 text-3xl">SIGNUP</p>
 
-      <div class="flex flex-wrap mb-4">
-        <div class="w-1/2 pr-2">
-          <input class="w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
-            type="text"
-            name="firstname"
-            placeholder="First Name"
-            required
-          />
-        </div>
-        <div class="w-1/2 pl-2">
-          <input class="w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
-            type="text"
-            name="lastname"
-            placeholder="Last Name"
-            required
-          />
-        </div>
+                <div class="flex flex-wrap mb-4">
+                  <div class="w-1/2 pr-2">
+                    <input
+                      class="w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
+                      type="text"
+                      name="firstname"
+                      placeholder="First Name"
+                      required
+                    />
+                  </div>
+                  <div class="w-1/2 pl-2">
+                    <input
+                      class="w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
+                      type="text"
+                      name="lastname"
+                      placeholder="Last Name"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <input
+                  class="mb-3 w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
+                  type="text"
+                  name="username"
+                  placeholder="Email Address"
+                  required
+                />
+
+                <div class="flex flex-wrap mb-4">
+                  <div class="w-1/2 pr-2">
+                    <input
+                      class="w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
+                      type="password"
+                      name="password"
+                      placeholder="Password"
+                      required
+                    />
+                  </div>
+                  <div class="w-1/2 pl-2">
+                    <input
+                      class="w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
+                      type="password"
+                      name="confirm_password"
+                      placeholder="Confirm Password"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="flex flex-wrap mb-4">
+                  <div class="w-1/2 pr-2">
+                    <select
+                      class="w-full h-10 px-3 py-2 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
+                      name="gender"
+                    >
+                      <option disabled selected>Choose a gender</option>
+                      <option>Male</option>
+                      <option>Female</option>
+                      <option>Other</option>
+                    </select>
+                  </div>
+                  <div class="w-1/2 pl-2">
+                    <input
+                      class="w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500 font-sans"
+                      type="number"
+                      min="0"
+                      max="200"
+                      name="age"
+                      placeholder="Age"
+                      required
+                    />
+                  </div>
+                </div>
+                <input
+                  class="mb-3 w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
+                  type="text"
+                  name="specialist"
+                  placeholder="Area specialized in"
+                  required
+                />
+                <input
+                  type="checkbox"
+                  name="termsAndCond"
+                  value="termsAndCond"
+                  class="text-base"
+                />&nbsp;&nbsp;I agree to the terms and conditions<br /><br />
+
+                <button
+                  mat-flat-button
+                  class="!bg-teal-600 flex justify-center w-full !text-white"
+                >
+                  Sign Up</button
+                ><br /><br />
+                <p class="text-base">
+                  Already have an account?&nbsp;&nbsp;<a
+                    routerLink="/login"
+                    class="text-blue-600 font-semibold"
+                    >Sign in here</a
+                  >
+                </p>
+              </div>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Patient">
+            <div class="flex justify-center items-center">
+              <div
+                class="bg-white-500 border-solid border-2 border-black-600 max-w-md px-11 py-16"
+              >
+                <p class="py-1 text-3xl">SIGNUP</p>
+
+                <div class="flex flex-wrap mb-4">
+                  <div class="w-1/2 pr-2">
+                    <input
+                      class="w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
+                      type="text"
+                      name="firstname"
+                      placeholder="First Name"
+                      required
+                    />
+                  </div>
+                  <div class="w-1/2 pl-2">
+                    <input
+                      class="w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
+                      type="text"
+                      name="lastname"
+                      placeholder="Last Name"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <input
+                  class="mb-3 w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
+                  type="text"
+                  name="username"
+                  placeholder="Email Address"
+                  required
+                />
+
+                <div class="flex flex-wrap mb-4">
+                  <div class="w-1/2 pr-2">
+                    <input
+                      class="w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
+                      type="password"
+                      name="password"
+                      placeholder="Password"
+                      required
+                    />
+                  </div>
+                  <div class="w-1/2 pl-2">
+                    <input
+                      class="w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
+                      type="password"
+                      name="confirm_password"
+                      placeholder="Confirm Password"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="flex flex-wrap mb-4">
+                  <div class="w-1/2 pr-2">
+                    <select
+                      class="w-full h-10 px-3 py-2 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
+                      name="gender"
+                    >
+                      <option disabled selected>Choose a gender</option>
+                      <option>Male</option>
+                      <option>Female</option>
+                      <option>Other</option>
+                    </select>
+                  </div>
+                  <div class="w-1/2 pl-2">
+                    <input
+                      class="w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500 font-sans"
+                      type="number"
+                      min="0"
+                      max="200"
+                      name="age"
+                      placeholder="Age"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <input
+                  type="checkbox"
+                  name="termsAndCond"
+                  value="termsAndCond"
+                  class="text-base"
+                />&nbsp;&nbsp;I agree to the terms and conditions<br /><br />
+
+                <button
+                  mat-flat-button
+                  class="!bg-teal-600 flex justify-center w-full !text-white"
+                >
+                  Sign Up</button
+                ><br /><br />
+                <p class="text-base">
+                  Already have an account?&nbsp;&nbsp;<a
+                    routerLink="/login"
+                    class="text-blue-600 font-semibold"
+                    >Sign in here</a
+                  >
+                </p>
+              </div>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
       </div>
-
-      <input class="mb-3 w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
-        type="text"
-        name="username"
-        placeholder="Email Address"
-        required
-      />
-
-      <div class="flex flex-wrap mb-4">
-        <div class="w-1/2 pr-2">
-          <input class="w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
-            type="password"
-            name="password"
-            placeholder="Password"
-            required
-          />
-        </div>
-        <div class="w-1/2 pl-2">
-          <input class="w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
-            type="password"
-            name="confirm_password"
-            placeholder="Confirm Password"
-            required
-          />
-        </div>
-      </div>
-      <div class="flex flex-wrap mb-4">
-        <div class="w-1/2 pr-2">
-          <select class="w-full h-10 px-3 py-2 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500" name="gender">
-            <option disabled selected>Choose a gender</option>
-            <option>Male</option>
-            <option>Female</option>
-            <option>Other</option>
-          </select>
-        </div>
-        <div class="w-1/2 pl-2">
-          <input class="w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500 font-sans"
-          type="number" min="0" max="200"
-          name="age"
-          placeholder="Age"
-          required
-        />
-        </div></div>
-        <input class="mb-3 w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
-        type="text"
-        name="specialist"
-        placeholder="Area specialized in"
-        required
-      />
-      <input
-        type="checkbox"
-        name="termsAndCond"
-        value="termsAndCond"
-        class="text-base"
-      />&nbsp;&nbsp;I agree to the terms and conditions<br /><br />
-
-      <button
-          mat-flat-button
-          class="!bg-teal-600 flex justify-center w-full !text-white"
-        >
-        Sign Up
-      </button><br><br>   
-      <p class="text-base">Already have an account?&nbsp;&nbsp;<a routerLink="/login" class="text-blue-600 font-semibold">Sign in here</a></p>
     </div>
-  </div>
-  </mat-tab>
-
-  <mat-tab label="Patient">
-    <div class="flex justify-center items-center h-screen">
-      <div class="bg-white-500 border-solid border-2 border-black-600 max-w-md -mt-44 px-11 py-10">
-        <p class="py-1 text-3xl">SIGNUP</p>
-  
-        <div class="flex flex-wrap mb-4">
-          <div class="w-1/2 pr-2">
-            <input class="w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
-              type="text"
-              name="firstname"
-              placeholder="First Name"
-              required
-            />
-          </div>
-          <div class="w-1/2 pl-2">
-            <input class="w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
-              type="text"
-              name="lastname"
-              placeholder="Last Name"
-              required
-            />
-          </div>
-        </div>
-  
-        <input class="mb-3 w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
-          type="text"
-          name="username"
-          placeholder="Email Address"
-          required
-        />
-  
-        <div class="flex flex-wrap mb-4">
-          <div class="w-1/2 pr-2">
-            <input class="w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
-              type="password"
-              name="password"
-              placeholder="Password"
-              required
-            />
-          </div>
-          <div class="w-1/2 pl-2">
-            <input class="w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
-              type="password"
-              name="confirm_password"
-              placeholder="Confirm Password"
-              required
-            />
-          </div>
-        </div>
-        <div class="flex flex-wrap mb-4">
-          <div class="w-1/2 pr-2">
-            <select class="w-full h-10 px-3 py-2 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500" name="gender">
-              <option disabled selected>Choose a gender</option>
-              <option>Male</option>
-              <option>Female</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div class="w-1/2 pl-2">
-            <input class="w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500 font-sans"
-            type="number" min="0" max="200"
-            name="age"
-            placeholder="Age"
-            required
-          />
-          </div></div>
-  
-        <input
-          type="checkbox"
-          name="termsAndCond"
-          value="termsAndCond"
-          class="text-base"
-        />&nbsp;&nbsp;I agree to the terms and conditions<br /><br />
-  
-        <button
-            mat-flat-button
-            class="!bg-teal-600 flex justify-center w-full !text-white"
-          >
-          Sign Up
-        </button><br><br>   
-        <p class="text-base">Already have an account?&nbsp;&nbsp;<a routerLink="/login" class="text-blue-600 font-semibold">Sign in here</a></p>
-      </div>
-    </div>
-    </mat-tab>
-  </mat-tab-group>
-  </div></div>
-</body>
+  </body>
 </html>

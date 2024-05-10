@@ -1,89 +1,111 @@
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login Page</title>
-</head>
-<body>
-  <div class="min-h-screen flex items-center justify-center ">
-    <div class="bg-white h-auto max-w-md w-full mt-10">
-  <mat-tab-group>
-    <mat-tab label="Doctor">
-      
-      <div class="flex justify-center items-center h-screen">
-        <div class="bg-white-500 border-solid border-2 -mt-56 border-black-600 max-w-md px-11 py-10">
-          <p class="py-1 text-3xl">LOGIN</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Page</title>
+  </head>
+  <body>
+    <div
+      class="min-h-full bg-gradient-to-r from-teal-50 to-teal-200 flex items-center justify-center"
+    >
+      <div class="bg-white max-w-md w-full">
+        <mat-tab-group>
+          <mat-tab label="Doctor">
+            <div class="flex justify-center items-center">
+              <div
+                class="bg-white-500 border-solid border-2 border-black-600 max-w-md px-11 py-10"
+              >
+                <p class="py-1 text-3xl">LOGIN</p>
 
-          <input class="mb-2 w-72 h-10 text-base px-3 py-3 border-solid border-2 border-gray-300 box-border transition duration-500 focus:outline-none focus:border-red-500"
-            type="text"
-            name="username"
-            placeholder="Email Address"
-            required
-          />
-          <input class="w-72 h-10 text-base px-3 py-3 border-solid border-2 border-gray-300 box-border transition duration-500 focus:outline-none focus:border-red-500"
-            type="password"
-            name="password"
-            placeholder="Password"
-            required
-          />
-          <br /><br />
-          <input class="text-base"
-            type="checkbox"
-            name="rememberMe"
-            value="remember-me"
-            class="rememberMe"
-          />&nbsp;&nbsp;Remember Me <br /><br />
+                <input
+                  class="mb-2 w-72 h-10 text-base px-3 py-3 border-solid border-2 border-gray-300 box-border transition duration-500 focus:outline-none focus:border-red-500"
+                  type="text"
+                  name="username"
+                  placeholder="Email Address"
+                  required
+                />
+                <input
+                  class="w-72 h-10 text-base px-3 py-3 border-solid border-2 border-gray-300 box-border transition duration-500 focus:outline-none focus:border-red-500"
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  required
+                />
+                <br /><br />
+                <input
+                  class="text-base"
+                  type="checkbox"
+                  name="rememberMe"
+                  value="remember-me"
+                  class="rememberMe"
+                />&nbsp;&nbsp;Remember Me <br /><br />
 
-          <button
-          mat-flat-button
-          class="!bg-teal-600 flex justify-center w-full !text-white"
-        >
-            Login
-          </button><br><br>   
-          <p class="text-base">New Here?&nbsp;&nbsp;<a routerLink="/signup" class="text-blue-600 font-semibold">Create new account</a></p>
-        </div>
+                <button
+                  mat-flat-button
+                  class="!bg-teal-600 flex justify-center w-full !text-white"
+                >
+                  Login</button
+                ><br /><br />
+                <p class="text-base">
+                  New Here?&nbsp;&nbsp;<a
+                    routerLink="/signup"
+                    class="text-blue-600 font-semibold"
+                    >Create new account</a
+                  >
+                </p>
+              </div>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Patient">
+            <div class="flex justify-center items-center">
+              <div
+                class="bg-white-500 border-solid border-2 border-black-600 max-w-md px-11 py-10"
+              >
+                <p class="py-1 text-3xl">LOGIN</p>
+
+                <input
+                  class="mb-2 w-72 h-10 text-base px-3 py-3 border-solid border-2 border-gray-300 box-border transition duration-500 focus:outline-none focus:border-red-500"
+                  type="text"
+                  name="username"
+                  placeholder="Email Address"
+                  required
+                />
+                <input
+                  class="w-72 h-10 text-base px-3 py-3 border-solid border-2 border-gray-300 box-border transition duration-500 focus:outline-none focus:border-red-500"
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  required
+                />
+                <br /><br />
+                <input
+                  class="text-base"
+                  type="checkbox"
+                  name="rememberMe"
+                  value="remember-me"
+                  class="rememberMe"
+                />&nbsp;&nbsp;Remember Me <br /><br />
+
+                <button
+                  mat-flat-button
+                  class="!bg-teal-600 flex justify-center w-full !text-white"
+                >
+                  Login</button
+                ><br /><br />
+                <p class="text-base">
+                  New Here?&nbsp;&nbsp;<a
+                    routerLink="/signup"
+                    class="text-blue-600 font-semibold"
+                    >Create new account</a
+                  >
+                </p>
+              </div>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
       </div>
-      
-    </mat-tab>
-  
-    <mat-tab label="Patient">
-      <div class="flex justify-center items-center h-screen">
-        <div class="bg-white-500 border-solid border-2 -mt-56 border-black-600 max-w-md px-11 py-10">
-          <p class="py-1 text-3xl">LOGIN</p>
-
-          <input class="mb-2 w-72 h-10 text-base px-3 py-3 border-solid border-2 border-gray-300 box-border transition duration-500 focus:outline-none focus:border-red-500"
-            type="text"
-            name="username"
-            placeholder="Email Address"
-            required
-          />
-          <input class="w-72 h-10 text-base px-3 py-3 border-solid border-2 border-gray-300 box-border transition duration-500 focus:outline-none focus:border-red-500"
-            type="password"
-            name="password"
-            placeholder="Password"
-            required
-          />
-          <br /><br />
-          <input class="text-base"
-            type="checkbox"
-            name="rememberMe"
-            value="remember-me"
-            class="rememberMe"
-          />&nbsp;&nbsp;Remember Me <br /><br />
-
-          <button
-          mat-flat-button
-          class="!bg-teal-600 flex justify-center w-full !text-white"
-        >
-            Login
-          </button><br><br>   
-          <p class="text-base">New Here?&nbsp;&nbsp;<a routerLink="/signup" class="text-blue-600 font-semibold">Create new account</a></p>
-        </div>
-      </div>
-    </mat-tab>
-  </mat-tab-group>
-  </div></div>
-</body>
+    </div>
+  </body>
 </html>
