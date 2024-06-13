@@ -1,5 +1,5 @@
 <div
-  class="bg-gradient-to-r py-10 from-teal-50 to-teal-200 min-h-full w-full flex flex-col items-center"
+  class="bg-gradient-to-r py-10 from-cyan-50 to-cyan-200 min-h-full w-full flex flex-col items-center"
 >
   <div class="w-full ml-80 mt-5 mb-10 flex flex-col items-start">
     <div>
@@ -15,13 +15,13 @@
     [formGroup]="bookingFormGroup"
     class="bg-gray-50 shadow-lg w-4/5 flex flex-col justify-center items-center rounded-lg"
   >
-    <div class="font1 font-bold text-2xl text-teal-800 my-6">
+    <div class="font1 font-bold text-2xl text-cyan-800 my-6">
       Book Appointment
     </div>
     <mat-divider class="text-black w-5/6"></mat-divider>
     <div class="w-5/6">
       <mat-stepper
-        class="w-full"
+        class="w-full z-0"
         orientation="vertical"
         [linear]="true"
         #stepper
@@ -156,7 +156,7 @@
                     <div class="flex items-center w-full mt-3 mb-3">
                       <span class="mr-5">Available Slots:</span>
 
-                      <div class="h-2 w-2 rounded bg-teal-500"></div>
+                      <div class="h-2 w-2 rounded bg-cyan-500"></div>
                       <span class="text-gray-600 mx-1">Available</span>
                       <div class="h-2 w-2 rounded bg-red-500 ml-3"></div>
                       <span class="text-gray-600 mx-1">Occupied</span>
@@ -172,7 +172,7 @@
                   (click)="openDialog()"
                   [disabled]="!slot.isAvailable"
                   [ngClass]="{
-                    '!bg-teal-500': slot.isAvailable,
+                    '!bg-cyan-500': slot.isAvailable,
                     '!bg-red-500': !slot.isAvailable,
                     'cursor-no-drop': !slot.isAvailable
                   }"

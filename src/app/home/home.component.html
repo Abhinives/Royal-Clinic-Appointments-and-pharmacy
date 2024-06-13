@@ -1,7 +1,7 @@
 <!-- <mat-toolbar class="">
   <img class="h-10" src="../../assets/logo.png" />
 
-  <span class="text-teal-600 mx-4">Royal Clinic</span>
+  <span class="text-cyan-600 mx-4">Royal Clinic</span>
   <span class="example-spacer"></span>
   <div class="text-sm text-gray-600 flex items-center flex-row">
     <div class="mx-4">
@@ -14,7 +14,7 @@
       <button
         routerLink="/login"
         mat-flat-button
-        class="!bg-teal-500 !text-white"
+        class="!bg-cyan-600 !text-white"
       >
         Login
       </button>
@@ -23,27 +23,33 @@
 </mat-toolbar> -->
 
 <div
-  class="bg-gradient-to-r from-teal-50 to-teal-200 h-full flex items-center justify-center w-full"
+  class="bg-gradient-to-r from-cyan-50 from-30% via-cyan-200 via-70% to-cyan-600 h-full flex flex-col md:flex-row items-center justify-center w-full"
 >
-  <div class="w-1/2 font1 font-bold text-5xl text-teal-800 mx-8">
+  <div
+    class="w-full text-center md:text-start md:w-1/2 font1 font-bold text-4xl sm:text-5xl text-cyan-800 mx-8 flex-row justify-center md:flex-none"
+  >
     WE CARE ABOUT YOUR HEALTH
-    <div class="font2 text-sm text-gray-500 my-4 mx-2">
+    <div
+      class="font2 text-sm text-gray-500 my-4 mx-2 text-center md:text-start"
+    >
       This is a text. This is a text. This is a text. This is a text. This is a
       text.
     </div>
-    <div>
+    <div class="flex justify-center md:justify-start">
       <button
         routerLink="/medical-appointment"
-        class="!bg-teal-500 !text-white !rounded-full"
+        class="!bg-cyan-600 !text-white !rounded-full"
         mat-flat-button
       >
         <span class="font2">Book an Appointment</span>
       </button>
     </div>
   </div>
-  <div class="w-1/2 flex justify-end">
+  <div
+    class="w-full h-1/2 md:h-full md:w-1/2 flex justify-center md:items-center md:justify-end"
+  >
     <img
-      class="min-h-10 !w-3/4 mb-9 relative right-40"
+      class="h-full md:h-3/4 mb-9 relative right-12 md:right-40"
       src="../../assets/doctor.png"
     />
   </div>

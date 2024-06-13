@@ -1,8 +1,8 @@
 <div
-  class="bg-gradient-to-r py-10 from-teal-50 to-teal-200 min-h-full w-full flex flex-col items-center"
+  class="bg-gradient-to-r py-10 from-cyan-50 to-cyan-200 h-full w-full flex flex-col justify-center items-center"
 >
   <div
-    class="w-4/5 bg-gradient-to-r from-teal-100 to-white rounded px-20 pt-10 pb-20 shadow-lg"
+    class="w-4/5 bg-gradient-to-r from-cyan-100 to-white rounded px-10 md:px-20 pt-10 pb-20 shadow-lg"
   >
     <div class="flex items-center">
       <div class="w-full mt-5 mb-5 flex flex-col">
@@ -15,8 +15,14 @@
       </div>
     </div>
     <mat-divider class="mb-10"></mat-divider>
-    <div class="my-8">
-      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <div
+      class="my-8 table-container overflow-x-auto w-full md:w-full rounded-xl shadow-lg"
+    >
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        class="mat-elevation-z8 example-table w-full md:w-full table-fixed p-2"
+      >
         <!--- Note that these columns can be defined in any order.
                   The actual rendered columns are set as a property on the row definition" -->
 

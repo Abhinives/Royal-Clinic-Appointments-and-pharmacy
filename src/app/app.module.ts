@@ -39,6 +39,8 @@ import { MedicinesDialogComponent } from './medicines-dialog/medicines-dialog.co
 import { CartComponent } from './cart/cart.component';
 import { MyordersComponent } from './myorders/myorders.component';
 import { MyappointmentsComponent } from './myappointments/myappointments.component';
+import { MainpageComponent } from './mainpage/mainpage.component';
+import { DoctorloginComponent } from './doctorlogin/doctorlogin.component';
 
 
 @NgModule({
@@ -57,6 +59,8 @@ import { MyappointmentsComponent } from './myappointments/myappointments.compone
     CartComponent,
     MyordersComponent,
     MyappointmentsComponent,
+    MainpageComponent,
+    DoctorloginComponent,
 
   ],
   imports: [

@@ -1,36 +1,67 @@
-<mat-toolbar class="">
-  <img class="h-10" src="../../assets/logo.png" />
+<mat-toolbar class="!bg-white shadow-md">
+  <mat-menu #menu="matMenu" class="w-full">
+    <button routerLink="/" mat-menu-item class="w-full hover:text-cyan-600">
+      Home
+    </button>
+    <button routerLink="/services" mat-menu-item class="hover:text-cyan-600">
+      Services
+    </button>
+    <button routerLink="/my-orders" mat-menu-item class="hover:text-cyan-600">
+      My Orders
+    </button>
+  </mat-menu>
+  <div class="example-sidenav-content md:hidden mr-2">
+    <button [matMenuTriggerFor]="menu" mat-icon-button>
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+  <div [routerLink]="['/']" class="flex items-center cursor-pointer">
+    <img class="hidden h-10 md:block" src="../../assets/logo.png" />
 
-  <span class="text-teal-600 mx-4">Royal Clinic</span>
+    <span class="text-cyan-600 md:mx-4">Royal Clinic</span>
+  </div>
   <span class="example-spacer"></span>
   <div class="text-sm text-gray-600 flex items-center flex-row">
-    <div class="mx-4">
-      <span routerLink="/" class="cursor-pointer hover:text-teal-500 transition"
-        >Home</span
+    <div class="mx-4 hidden md:block">
+      <span
+        routerLink="/"
+        class="cursor-pointer hover:text-cyan-600 transition flex items-center"
+      >
+        Home</span
       >
     </div>
-    <div class="mx-4">
+    <div class="mx-4 hidden md:block">
       <span
         routerLink="/services"
-        class="cursor-pointer hover:text-teal-500 transition"
+        class="cursor-pointer hover:text-cyan-600 transition"
         >Services</span
       >
     </div>
-    <div class="mx-4">
+    <div class="mx-4 hidden md:block">
       <span
         routerLink="/my-orders"
-        class="cursor-pointer hover:text-teal-500 transition"
+        class="cursor-pointer hover:text-cyan-600 transition"
         >My Orders</span
       >
     </div>
 
-    <div class="mx-4">
+    <div class="mx-4 hidden md:block">
       <button
         routerLink="/login"
         mat-flat-button
-        class="!bg-teal-500 !text-white !rounded-full"
+        class="!bg-cyan-600 !text-white !rounded-full flex items-center"
       >
+        <mat-icon class="">account_circle</mat-icon>
         Login
+      </button>
+    </div>
+    <div class="mx-4 block md:hidden">
+      <button
+        routerLink="/login"
+        mat-icon-button
+        class="flex items-center justify-center !text-cyan-600 !rounded-full"
+      >
+        <mat-icon class="">account_circle</mat-icon>
       </button>
     </div>
   </div>
