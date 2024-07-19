@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-medicines-dialog',
@@ -11,20 +12,33 @@ export class MedicinesDialogComponent implements OnInit {
 
   quantity: FormControl;
   price: number = 0;
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private _dialogRef: MatDialogRef<MedicinesDialogComponent>) {
+  userId: string | null = null;
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private _dialogRef: MatDialogRef<MedicinesDialogComponent>, private authService: AuthService) {
     this.quantity = new FormControl(1);
+    this.authService.getUserId().subscribe((data) => {
+      this.userId = data;
+    })
   }
   ngOnInit(): void {
     console.log(this.data);
     this.price = this.data.cost;
-    this.quantity.valueChanges.subscribe((data) => {
 
-      this.price = this.data.cost * data;
-    })
+    // this.quantity.valueChanges.subscribe((data) => {
+
+    //   this.price = this.data.cost * data;
+    // })
   }
 
 
   addProducts(): void {
-    this._dialogRef.close({ name: this.data.name, price: this.price, qty: this.quantity.value })
+
+    const payload = {
+      product: [{
+        medicineId: this.data._id,
+        qty: this.quantity.value
+      }]
+    };
+
+    this._dialogRef.close(payload)
   }
 }

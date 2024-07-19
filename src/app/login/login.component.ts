@@ -14,19 +14,39 @@ export class LoginComponent implements OnInit {
 
   isForgetPassword: boolean = false;
   isMailSent: boolean = false;
+  isChangePassword: boolean = false;
   loginFormGroup: FormGroup;
   errorMsg: String = '';
+  errorMsg2: String = '';
+  errorMsg3: String = '';
 
-  constructor(private router: Router, private authService: AuthService, private _formBuilder: FormBuilder, private _loginService: LoginService, private _snackBarService: MatSnackBar) {
+
+  //OTP
+  otpDigit1: String = '';
+  otpDigit2: String = '';
+  otpDigit3: String = '';
+  otpDigit4: String = '';
+
+  //Email verification
+  emailForVerification: FormControl = new FormControl('', [Validators.required, Validators.email]);
+
+  //Password updation
+  newPassword: FormControl = new FormControl('', [Validators.required, Validators.minLength(6)]);
+  confirmPassword: FormControl = new FormControl('', [Validators.required, Validators.minLength(6)]);
+
+  constructor(private snackBar: MatSnackBar, private router: Router, private authService: AuthService, private _formBuilder: FormBuilder, private _loginService: LoginService, private _snackBarService: MatSnackBar) {
     this.loginFormGroup = this._formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
-
   }
   ngOnInit(): void {
     this.loginFormGroup.valueChanges.subscribe((data) => {
       this.errorMsg = '';
+
+    })
+    this.emailForVerification.valueChanges.subscribe((data) => {
+      this.errorMsg2 = '';
     })
   }
 
@@ -36,16 +56,22 @@ export class LoginComponent implements OnInit {
       password: this.loginFormGroup.value.password
     };
     this._loginService.login(body).subscribe((data) => {
-      const isLoggedIn = this.authService.addAuthentication(data.accessToken);
+      console.log(data);
+      const isLoggedIn = this.authService.addAuthentication(data.accessToken, data.userId);
       if (isLoggedIn) {
         this.router.navigate(['/home']);
       }
     }, (error) => {
       this.errorMsg = error?.error?.error;
-      console.log(this.errorMsg);
+      if (!this.errorMsg) {
+        this.snackBar.open("Please try again later", "", {
+          duration: 2000
+        });
+      }
     })
   }
   move(e: any, previous: any, current: any, next: any): void {
+    this.errorMsg3 = '';
     var length = current.value.length;
     var maxLength = current.getAttribute("maxlength");
 
@@ -63,7 +89,68 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  //Otp verification
+
+  otpVerify(): void {
+    if (this.otpDigit1 !== '' && this.otpDigit2 !== '' && this.otpDigit3 !== '' && this.otpDigit4 !== '') {
+      const otp = `${this.otpDigit1}${this.otpDigit2}${this.otpDigit3}${this.otpDigit4}`;
+      this._loginService.otpVerification(this.emailForVerification.value, otp).subscribe((data) => {
+        if (data.isVerified) {
+          this.isMailSent = false;
+          this.isForgetPassword = false;
+          this.isChangePassword = true;
+        }
+      }, (error) => {
+        this.errorMsg3 = error?.error?.error;
+        if (!this.errorMsg3) {
+          this.snackBar.open("Please try again later", "", {
+            duration: 2000
+          });
+        }
+      })
+    }
+
+
+  }
+
   resetPassword(): void {
-    this.isMailSent = true;
+    // this.isMailSent = true;
+    this._loginService.sendOtp(this.emailForVerification.value).subscribe((data) => {
+      if (data.isSent) {
+        this.isMailSent = true;
+      }
+    }, (error) => {
+      this.errorMsg2 = error?.error?.error;
+      if (!this.errorMsg2) {
+        this.snackBar.open("Please try again later", "", {
+          duration: 2000
+        });
+      }
+    })
+  }
+
+
+  //Updating the password
+  createNewPassword(): void {
+    if (this.newPassword.valid && this.confirmPassword.valid) {
+      const body = {
+        email: this.emailForVerification.value,
+        password: this.newPassword.value,
+        confirmPassword: this.confirmPassword.value
+      };
+      this._loginService.updatePassword(body).subscribe((data) => {
+        const updated = this.authService.addAuthentication(data.accessToken, data.userId);
+        if (updated) {
+          this.router.navigate(['home']);
+        }
+        this.snackBar.open('Password updated successfully', '', {
+          "duration": 2000
+        });
+      }, (error) => {
+        this.snackBar.open('Error occured while updating password', '', {
+          "duration": 2000
+        });
+      })
+    }
   }
 }

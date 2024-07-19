@@ -1,19 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { emailValidator, phoneValidator } from './booking.validators';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { MatExpansionPanel } from '@angular/material/expansion';
+import { BookingService } from './booking.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { debounceTime } from 'rxjs';
 
 @Component({
   selector: 'app-booking',
   templateUrl: './booking.component.html',
   styleUrls: ['./booking.component.scss']
 })
-export class BookingComponent implements OnInit {
+export class BookingComponent implements OnInit, AfterViewInit {
   bookingFormGroup: FormGroup;
-  specialist: String[] = ['Cardiologist', 'Neuro'];
+  @ViewChild('panel') panel!: MatExpansionPanel;
+  specialist: String[] = [];
   doctors: String[] = ['Ram', 'Kumar'];
+  doctorDetails: { _id: String, firstName: String, specializedIn: String, generalFee: Number }[] = [];
+  currentDate: Date = new Date();
+
+  defaultTimeSlot: { startTime: String, endTime: String, isBooked?: boolean }[] = [
+  ];
+  startHour = ((new Date().getHours()) + 1) % 24;
+  selectedTabIndex: Number = 0;
+
+  nextDate: Date = new Date(this.currentDate);
+
+
   myFilter = (d: Date | null): boolean => {
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
@@ -46,31 +62,198 @@ export class BookingComponent implements OnInit {
 
 
 
-  constructor(private _dialog: MatDialog, private _formBuilder: FormBuilder) {
+  constructor(private cdr: ChangeDetectorRef, private snackbar: MatSnackBar, private _dialog: MatDialog, private _formBuilder: FormBuilder, private bookingService: BookingService) {
+
+    console.log(this.startHour);
+    this.nextDate.setDate(this.currentDate.getDate() + 1);
     this.bookingFormGroup = this._formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       gender: ['', Validators.required],
-      age: [0, Validators.required],
+      age: ['', Validators.required],
       email: ['', [Validators.required, emailValidator]],
       specialist: ['', Validators.required],
-      doctorName: ['', Validators.required],
+      doctorId: ['', Validators.required],
       phone: ['', [Validators.required, phoneValidator]],
       date: ['', Validators.required],
+      fee: [{ value: 0, disabled: true }, Validators.required]
 
     })
 
   }
   ngOnInit(): void {
-    this.bookingFormGroup.valueChanges.subscribe((data) => {
+
+    this.bookingFormGroup.get("doctorId")?.valueChanges.subscribe((data) => {
+      const findDoctor = this.doctorDetails.find(doctor => doctor._id === data);
+      if (findDoctor) {
+        this.bookingFormGroup.get("fee")?.setValue(findDoctor?.generalFee);
 
 
+        this.updateTimeSlot(this.currentDate.toISOString().split("T")[0], findDoctor._id);
+      }
+    })
+    this.bookingFormGroup.get('specialist')?.valueChanges.pipe(debounceTime(300)).subscribe((data) => {
+      this.bookingService.getDoctorDetails(data).subscribe((details) => {
+        details.forEach((information: any) => {
+          this.doctorDetails.push(information);
+        })
+      });
+      console.log(this.doctorDetails);
+    })
+
+    this.bookingService.getSpecialistDetails().subscribe((data) => {
+      data.specializations.forEach((specialist: String) => {
+        this.specialist.push(specialist);
+      })
+    }, (error) => {
+      this.snackbar.open("Please try again later", "", {
+        duration: 2000
+      });
+    })
+    this.fillDefaultTimeSlot(this.startHour);
+
+  }
+
+  ngAfterViewInit(): void {
+    if (this.panel) {
+      this.panel.open();
+    }
+    this.cdr.detectChanges();
+  }
+
+  fillDefaultTimeSlot(startHour: number): void {
+    const numberOfSlots = 10; // Number of time slots to generate
+    let currentHour = startHour;
+
+    for (let i = 0; i < numberOfSlots; i++) {
+      const startTime = this.formatTime(currentHour, 0); // Start time of the slot
+      const endTime = this.formatTime(currentHour + 1, 0); // End time of the slot
+
+      if (currentHour + 1 === 1) {
+        break;
+      }
+      this.defaultTimeSlot.push({
+        startTime: startTime,
+        endTime: endTime
+      });
+
+      currentHour = (currentHour + 1) % 24; // Wrap around for next day if necessary
+    }
+    console.log(this.defaultTimeSlot);
+  }
+  formatTime(hours: number, minutes: number): string {
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+  }
+
+
+  updateTimeSlot(date: String, id: String): void {
+    console.log(date);
+    console.log(id);
+    this.bookingService.getBookedSlots(id, date).subscribe((data) => {
+      data.slots.forEach((slot: any) => {
+        const findSlot = (this.defaultTimeSlot.find(time => time.startTime === slot));
+        if (findSlot) {
+          findSlot.isBooked = true;
+        }
+      })
     })
   }
 
-  openDialog(): void {
-    this._dialog.open(DialogComponent, {
+  formatLocalDateToUTCString(date: any) {
+    // Get local time components
+    console.log(date);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    const milliseconds = String(date.getMilliseconds()).padStart(3, '0');
+
+    // Construct ISO string with 'Z' to indicate UTC time
+    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}Z`;
+  }
+  openDialog(index: number): void {
+    let startTime: any;
+    let endTime: any;
+    let date = '';
+    console.log(this.defaultTimeSlot[index]);
+    if (this.selectedTabIndex === 0) {
+      date = this.currentDate.toISOString().split("T")[0];
+
+      // Initialize start and end time
+      startTime = endTime = new Date(this.currentDate);
+
+      // Extract hours from defaultTimeSlot
+      const startHour = Number(this.defaultTimeSlot[index].startTime.split(":")[0]);
+      const endHour = Number(this.defaultTimeSlot[index].endTime.split(":")[0]);
+
+      // Set hours in local time
+      console.log(startTime);
+      console.log(startTime.setHours(startHour));
+      startTime.setMinutes(0);
+      startTime.setSeconds(0);
+      startTime.setMilliseconds(0);
+      console.log(startTime);
+
+
+      console.log('Start Time:', this.formatLocalDateToUTCString(startTime)); // Local time
+      // Local time
+
+    }
+    else {
+
+
+    }
+
+
+    const dialog = this._dialog.open(DialogComponent, {
       width: '400px'
     });
+    dialog.afterClosed().subscribe((isPaid) => {
+      if (isPaid) {
+        const bookingInfo = this.bookingFormGroup.value;
+        const payload = {
+          firstName: bookingInfo.firstName,
+          lastName: bookingInfo.lastName,
+          gender: bookingInfo.gender,
+          age: bookingInfo.age,
+          email: bookingInfo.email,
+          phone: bookingInfo.phone,
+          consultingFee: bookingInfo.fee,
+
+        };
+
+      }
+    })
+  }
+
+  onTabChanged(event: any): void {
+    console.log(this.currentDate.toISOString().split('T')[0]);
+    this.selectedTabIndex = event;
+    let formattedDate = '';
+    if (this.selectedTabIndex === 0) {
+      formattedDate = this.currentDate.toISOString().split("T")[0];
+    }
+    else {
+      formattedDate = this.nextDate.toISOString().split("T")[0];
+    }
+
+    setTimeout(() => {
+      this.defaultTimeSlot = [];
+      if (event === 0) {
+        console.log(event.index);
+
+        this.fillDefaultTimeSlot(this.startHour);
+
+      }
+      else {
+
+        this.fillDefaultTimeSlot(10);
+      }
+      this.updateTimeSlot(formattedDate, this.bookingFormGroup.get('doctorId')?.value);
+    }, 80)
+    // Log the index of the selected tab
+    // Perform any additional actions based on the tab change
   }
 }

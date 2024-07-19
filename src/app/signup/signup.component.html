@@ -1,4 +1,4 @@
-<div class="h-full w-full flex flex-row">
+<div [formGroup]="signUpForm" class="h-full w-full flex flex-row">
   <div class="w-full sm:w-1/4 md:w-1/2 relative">
     <img
       class="h-full w-full object-cover opacity-100"
@@ -31,36 +31,101 @@
         <div class="grid grid-cols-2">
           <mat-form-field class="col-span-1 m-1">
             <mat-label class="font2">First Name</mat-label>
-            <input type="text" matInput />
+            <input formControlName="firstName" type="text" matInput />
+            <mat-error
+              class="my-1"
+              *ngIf="signUpForm.get('firstName')?.hasError('required')"
+            >
+              First Name is required
+            </mat-error>
           </mat-form-field>
           <mat-form-field class="col-span-1 m-1">
             <mat-label class="font2">Last Name</mat-label>
-            <input type="text" matInput />
+            <input formControlName="lastName" type="text" matInput />
+            <mat-error
+              class="my-1"
+              *ngIf="signUpForm.get('lastName')?.hasError('required')"
+            >
+              Last Name is required
+            </mat-error>
           </mat-form-field>
           <mat-form-field class="col-span-1 m-1">
             <mat-label class="font2">Gender</mat-label>
-            <mat-select>
+            <mat-select formControlName="gender">
               <mat-option value="male">Male</mat-option>
               <mat-option value="female">Female</mat-option>
             </mat-select>
+            <mat-error
+              class="my-1"
+              *ngIf="signUpForm.get('gender')?.hasError('required')"
+            >
+              Gender is required
+            </mat-error>
           </mat-form-field>
           <mat-form-field class="col-span-1 m-1">
             <mat-label class="font2">Age</mat-label>
-            <input type="number" matInput />
+            <input formControlName="age" type="number" min="1" matInput />
+            <mat-error
+              class="my-1"
+              *ngIf="signUpForm.get('age')?.hasError('required')"
+            >
+              Age is required
+            </mat-error>
+            <mat-error
+              class="my-1"
+              *ngIf="signUpForm.get('age')?.hasError('min')"
+            >
+              Age must be greater than 0
+            </mat-error>
           </mat-form-field>
           <mat-form-field class="col-span-2 m-1">
             <mat-label class="font2">Email</mat-label>
-            <input type="text" matInput />
+            <input formControlName="email" type="text" matInput />
+            <mat-error
+              class="my-1"
+              *ngIf="signUpForm.get('email')?.hasError('required')"
+            >
+              Email is required
+            </mat-error>
+            <mat-error
+              class="my-1"
+              *ngIf="signUpForm.get('email')?.hasError('email')"
+            >
+              Please enter a valid email
+            </mat-error>
           </mat-form-field>
           <mat-form-field class="col-span-2 m-1">
             <mat-label class="font2">Password</mat-label>
-            <input type="password" matInput />
+            <input formControlName="password" type="password" matInput />
+            <mat-error
+              class="my-1"
+              *ngIf="signUpForm.get('password')?.hasError('minlength')"
+            >
+              Password must be at least 6 characters
+            </mat-error>
+            <mat-error
+              class="my-1"
+              *ngIf="signUpForm.get('password')?.hasError('required')"
+            >
+              Password is required
+            </mat-error>
           </mat-form-field>
+          <span
+            class="text-red-500 text-sm ml-2"
+            *ngIf="errorMsg && errorMsg !== ''"
+            >*{{ errorMsg }}</span
+          >
         </div>
       </div>
       <div class="mb-3">
-        <button mat-flat-button class="!text-white w-full" color="primary">
-          Sign In
+        <button
+          [disabled]="!signUpForm.valid"
+          (click)="signUp()"
+          mat-flat-button
+          class="!text-white w-full"
+          color="primary"
+        >
+          Sign Up
         </button>
       </div>
       <div class="flex justify-center">

@@ -10,6 +10,9 @@ import { MyordersComponent } from './myorders/myorders.component';
 import { MyappointmentsComponent } from './myappointments/myappointments.component';
 import { MainpageComponent } from './mainpage/mainpage.component';
 import { AuthGuard } from './auth/auth.guard';
+import { ProfileComponent } from './profile/profile.component';
+import { CartPageComponent } from './cart-page/cart-page.component';
+import { CheckoutPageComponent } from './checkout-page/checkout-page.component';
 
 const routes: Routes = [{
   path: '', component: HomeComponent
@@ -38,6 +41,15 @@ const routes: Routes = [{
 },
 {
   path: 'services/medicines', component: MedicinesComponent, canActivate: [AuthGuard]
+},
+{
+  path: 'services/medicines/cart', component: CartPageComponent, canActivate: [AuthGuard]
+},
+{
+  path: 'services/medicines/checkout', component: CheckoutPageComponent, canActivate: [AuthGuard]
+},
+{
+  path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]
 },
 {
   path: 'medical-appointment', component: BookingComponent, canActivate: [AuthGuard]

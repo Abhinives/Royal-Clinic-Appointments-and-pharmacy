@@ -6,9 +6,6 @@
     <button routerLink="/services" mat-menu-item class="hover:text-cyan-600">
       Services
     </button>
-    <button routerLink="/my-orders" mat-menu-item class="hover:text-cyan-600">
-      My Orders
-    </button>
   </mat-menu>
   <div class="example-sidenav-content md:hidden mr-2">
     <button [matMenuTriggerFor]="menu" mat-icon-button>
@@ -22,7 +19,7 @@
   </div>
   <span class="example-spacer"></span>
   <div class="text-sm text-gray-600 flex items-center flex-row">
-    <div class="mx-4 hidden md:block">
+    <div class="mx-3 hidden md:block">
       <span
         routerLink="/"
         class="cursor-pointer hover:text-cyan-600 transition flex items-center"
@@ -30,22 +27,15 @@
         Home</span
       >
     </div>
-    <div class="mx-4 hidden md:block">
+    <div class="mx-3 hidden md:block">
       <span
         routerLink="/services"
         class="cursor-pointer hover:text-cyan-600 transition"
         >Services</span
       >
     </div>
-    <div class="mx-4 hidden md:block">
-      <span
-        routerLink="/my-orders"
-        class="cursor-pointer hover:text-cyan-600 transition"
-        >My Orders</span
-      >
-    </div>
 
-    <div class="mx-4 hidden md:block">
+    <div *ngIf="!isLoggedIn" class="mx-3 hidden md:block">
       <button
         routerLink="/login"
         mat-flat-button
@@ -55,7 +45,32 @@
         Login
       </button>
     </div>
-    <div class="mx-4 block md:hidden">
+    <div *ngIf="isLoggedIn" class="mx-1 hidden md:block">
+      <mat-menu #menu1="matMenu" class="w-full">
+        <button
+          routerLink="/my-orders"
+          mat-menu-item
+          class="hover:text-cyan-600"
+        >
+          <mat-icon>exit_to_app</mat-icon>
+          My Orders
+        </button>
+        <button
+          (click)="signOut()"
+          mat-menu-item
+          class="flex items-center justify-center hover:text-cyan-600"
+        >
+          <mat-icon>exit_to_app</mat-icon>
+          Sign Out
+        </button>
+      </mat-menu>
+      <div class="example-sidenav-content mr-2">
+        <button [matMenuTriggerFor]="menu1" mat-icon-button>
+          <mat-icon>account_circle</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div *ngIf="!isLoggedIn" class="mx-3 block md:hidden">
       <button
         routerLink="/login"
         mat-icon-button
@@ -63,6 +78,29 @@
       >
         <mat-icon class="">account_circle</mat-icon>
       </button>
+    </div>
+    <div *ngIf="isLoggedIn" class="mx-3 block md:hidden">
+      <mat-menu #menu1="matMenu" class="w-full">
+        <button
+          (click)="signOut()"
+          mat-icon-button
+          class="flex items-center justify-center !text-cyan-600 !rounded-full"
+        >
+          <mat-icon>exit_to_app</mat-icon>
+        </button>
+        <button
+          routerLink="/my-orders"
+          mat-menu-item
+          class="hover:text-cyan-600"
+        >
+          My Orders
+        </button>
+      </mat-menu>
+      <div class="example-sidenav-content mr-2">
+        <button [matMenuTriggerFor]="menu1" mat-icon-button>
+          <mat-icon>account_circle</mat-icon>
+        </button>
+      </div>
     </div>
   </div>
 </mat-toolbar>

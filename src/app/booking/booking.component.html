@@ -26,13 +26,9 @@
         [linear]="true"
         #stepper
       >
-        <mat-step
-          class=""
-          label="Fill the form"
-          [stepControl]="bookingFormGroup"
-        >
+        <mat-step class="" label="Fill the form">
           <div class="grid grid-cols-2">
-            <mat-form-field class="col-span-1 my-4 mr-4">
+            <mat-form-field class="col-span-2 md:col-span-1 my-2 md:my-4 mr-4">
               <mat-label>First Name </mat-label>
               <input formControlName="firstName" type="text" matInput />
               <mat-error
@@ -40,7 +36,7 @@
                 >First Name is required</mat-error
               >
             </mat-form-field>
-            <mat-form-field class="col-span-1 my-4 mr-4">
+            <mat-form-field class="col-span-2 md:col-span-1 my-2 md:my-4 mr-4">
               <mat-label>Last Name </mat-label>
               <input formControlName="lastName" type="text" matInput />
               <mat-error
@@ -49,7 +45,7 @@
               >
             </mat-form-field>
 
-            <mat-form-field class="col-span-1 my-4 mr-4">
+            <mat-form-field class="col-span-2 md:col-span-1 my-2 md:my-4 mr-4">
               <mat-label>Gender </mat-label>
               <mat-select formControlName="gender">
                 <mat-option value="male">Male</mat-option>
@@ -61,15 +57,16 @@
               >
             </mat-form-field>
 
-            <mat-form-field class="col-span-1 my-4 mr-4">
+            <mat-form-field class="col-span-2 md:col-span-1 my-2 md:my-4 mr-4">
               <mat-label>Age </mat-label>
-              <input formControlName="age" type="number" matInput />
+              <input formControlName="age" type="number" matInput min="1" />
+
               <mat-error
                 *ngIf="bookingFormGroup.get('age')?.hasError('required')"
                 >Age is required</mat-error
               >
             </mat-form-field>
-            <mat-form-field class="col-span-1 my-4 mr-4">
+            <mat-form-field class="col-span-2 md:col-span-1 my-2 md:my-4 mr-4">
               <mat-label>Email </mat-label>
               <input formControlName="email" type="text" matInput />
               <mat-error
@@ -84,7 +81,7 @@
                 >Please enter a valid email address</mat-error
               >
             </mat-form-field>
-            <mat-form-field class="col-span-1 my-4 mr-4">
+            <mat-form-field class="col-span-2 md:col-span-1 my-2 md:my-4 mr-4">
               <mat-label>Choose the Specialist </mat-label>
               <mat-select formControlName="specialist">
                 <mat-option [value]="name" *ngFor="let name of specialist">{{
@@ -96,19 +93,31 @@
                 >Specialist field is required</mat-error
               >
             </mat-form-field>
-            <mat-form-field class="col-span-1 my-4 mr-4">
+            <mat-form-field class="col-span-2 md:col-span-1 my-2 md:my-4 mr-4">
               <mat-label>Choose the Doctor </mat-label>
-              <mat-select formControlName="doctorName">
-                <mat-option [value]="name" *ngFor="let name of doctors">{{
-                  name
-                }}</mat-option>
+              <mat-select
+                formControlName="doctorId"
+                [disabled]="!bookingFormGroup.get('specialist')?.valid"
+              >
+                <mat-option
+                  [value]="info._id"
+                  *ngFor="let info of doctorDetails"
+                  >{{ info.firstName }}</mat-option
+                >
               </mat-select>
               <mat-error
-                *ngIf="bookingFormGroup.get('doctorName')?.hasError('required')"
+                *ngIf="bookingFormGroup.get('specialist')?.hasError('required')"
+                >Choose specialist first</mat-error
+              >
+              <mat-error
+                *ngIf="
+                  !bookingFormGroup.get('specialist')?.hasError('required') &&
+                  bookingFormGroup.get('doctorId')?.hasError('required')
+                "
                 >Doctor name is required</mat-error
               >
             </mat-form-field>
-            <mat-form-field class="col-span-1 my-4 mr-4">
+            <mat-form-field class="col-span-2 md:col-span-1 my-2 md:my-4 mr-4">
               <mat-label>Phone </mat-label>
               <input formControlName="phone" type="text" matInput />
               <mat-error
@@ -123,7 +132,7 @@
                 >Please enter valid Phone number</mat-error
               >
             </mat-form-field>
-            <mat-form-field class="col-span-1 my-4 mr-4">
+            <!-- <mat-form-field class="col-span-2 md:col-span-1 my-2 md:my-4 mr-4">
               <mat-label>Choose a date </mat-label>
               <input
                 formControlName="date"
@@ -140,16 +149,16 @@
                 [for]="picker"
               ></mat-datepicker-toggle>
               <mat-datepicker touchUi #picker></mat-datepicker>
-            </mat-form-field>
-            <mat-form-field class="col-span-1 my-4 mr-4">
+            </mat-form-field> -->
+            <mat-form-field class="col-span-2 md:col-span-1 my-2 md:my-4 mr-4">
               <mat-label>Consulting Fee (Rs)</mat-label>
-              <input disabled type="number" matInput value="100" />
+              <input type="number" matInput formControlName="fee" />
             </mat-form-field>
           </div>
         </mat-step>
         <mat-step label="Choose Slot">
           <mat-accordion class="col-span-2 mb-8 mt-2 mr-4 bg-gray-100">
-            <mat-expansion-panel hideToggle class="p-3">
+            <mat-expansion-panel #panel hideToggle class="p-3">
               <mat-expansion-panel-header class="">
                 <mat-panel-title class="flex flex-row">
                   <div class="flex flex-col w-full">
@@ -167,22 +176,48 @@
               <div>
                 <mat-divider class="w-full"></mat-divider>
               </div>
-              <div class="grid grid-cols-4 my-4">
-                <button
-                  (click)="openDialog()"
-                  [disabled]="!slot.isAvailable"
-                  [ngClass]="{
-                    '!bg-cyan-500': slot.isAvailable,
-                    '!bg-red-500': !slot.isAvailable,
-                    'cursor-no-drop': !slot.isAvailable
-                  }"
-                  *ngFor="let slot of slots"
-                  mat-flat-button
-                  class="!text-white rounded col-span-1 mr-3 my-2"
+              <mat-tab-group
+                (selectedIndexChange)="onTabChanged($event)"
+                mat-stretch-tabs="false"
+                mat-align-tabs="start"
+              >
+                <mat-tab label="{{ currentDate | date : 'mediumDate' }}"
+                  ><div class="grid grid-cols-4 my-4">
+                    <button
+                      (click)="openDialog(i)"
+                      [disabled]="slot.isBooked"
+                      [ngClass]="{
+                        '!bg-cyan-500': !slot.isBooked,
+                        '!bg-red-500': slot.isBooked,
+                        'cursor-no-drop': slot.isBooked
+                      }"
+                      *ngFor="let slot of defaultTimeSlot; let i = index"
+                      mat-flat-button
+                      class="!text-white rounded col-span-1 mr-3 my-2"
+                    >
+                      {{ slot.startTime }} - {{ slot.endTime }}
+                    </button>
+                  </div></mat-tab
                 >
-                  {{ slot.time }}
-                </button>
-              </div>
+                <mat-tab label="{{ nextDate | date : 'mediumDate' }}"
+                  ><div class="grid grid-cols-4 my-4">
+                    <button
+                      (click)="openDialog(i)"
+                      [disabled]="slot.isBooked"
+                      [ngClass]="{
+                        '!bg-cyan-500': !slot.isBooked,
+                        '!bg-red-500': slot.isBooked,
+                        'cursor-no-drop': slot.isBooked
+                      }"
+                      *ngFor="let slot of defaultTimeSlot; let i = index"
+                      mat-flat-button
+                      class="!text-white rounded col-span-1 mr-3 my-2"
+                    >
+                      {{ slot.startTime }} - {{ slot.endTime }}
+                    </button>
+                  </div></mat-tab
+                >
+              </mat-tab-group>
 
               <div></div>
             </mat-expansion-panel>

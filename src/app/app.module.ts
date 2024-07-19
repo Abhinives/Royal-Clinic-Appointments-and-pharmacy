@@ -18,9 +18,11 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -41,6 +43,12 @@ import { MyordersComponent } from './myorders/myorders.component';
 import { MyappointmentsComponent } from './myappointments/myappointments.component';
 import { MainpageComponent } from './mainpage/mainpage.component';
 import { DoctorloginComponent } from './doctorlogin/doctorlogin.component';
+import { SignoutdialogComponent } from './signoutdialog/signoutdialog.component';
+import { ChangepasswordComponent } from './changepassword/changepassword.component';
+import { ProfileComponent } from './profile/profile.component';
+import { DeleteAddressDialogComponent } from './profile/delete-address-dialog/delete-address-dialog.component';
+import { CartPageComponent } from './cart-page/cart-page.component';
+import { CheckoutPageComponent } from './checkout-page/checkout-page.component';
 
 
 @NgModule({
@@ -61,6 +69,12 @@ import { DoctorloginComponent } from './doctorlogin/doctorlogin.component';
     MyappointmentsComponent,
     MainpageComponent,
     DoctorloginComponent,
+    SignoutdialogComponent,
+    ChangepasswordComponent,
+    ProfileComponent,
+    DeleteAddressDialogComponent,
+    CartPageComponent,
+    CheckoutPageComponent,
 
   ],
   imports: [
@@ -68,10 +82,13 @@ import { DoctorloginComponent } from './doctorlogin/doctorlogin.component';
     ReactiveFormsModule,
     MatSnackBarModule,
     HttpClientModule,
+    FormsModule,
+    MatProgressSpinnerModule,
     MatExpansionModule,
     MatTableModule,
     MatChipsModule,
     MatBadgeModule,
+    MatCheckboxModule,
     MatRadioModule,
     AppRoutingModule,
     BrowserAnimationsModule,

@@ -11,8 +11,9 @@
   <div
     class="w-full sm:w-3/4 md:w-1/2 absolute sm:relative h-full bg-cyan-50 flex items-center"
   >
+    <!-- Login -->
     <div
-      *ngIf="!isForgetPassword && !isMailSent"
+      *ngIf="!isForgetPassword && !isMailSent && !isChangePassword"
       class="w-full rounded bg-white mx-14 px-6 py-7 shadow-lg"
     >
       <div class="flex flex-col justify-center items-center mb-3">
@@ -63,7 +64,9 @@
               Password must be at least 6 characters
             </mat-error>
           </mat-form-field>
-          <span class="text-red-500 text-sm ml-1" *ngIf="errorMsg !== ''"
+          <span
+            class="text-red-500 text-xs ml-1"
+            *ngIf="errorMsg && errorMsg !== ''"
             >*{{ errorMsg }}</span
           >
           <div class="text-end">
@@ -96,6 +99,8 @@
         >
       </div>
     </div>
+
+    <!-- Email Verification -->
     <div
       *ngIf="isForgetPassword && !isMailSent"
       class="w-full rounded bg-white mx-14 px-6 py-7 shadow-lg"
@@ -115,13 +120,30 @@
       </div>
       <mat-divider></mat-divider>
 
-      <div class="flex flex-col my-5">
-        <mat-form-field class="">
+      <div class="flex flex-col mt-4 mb-2">
+        <mat-form-field class="m-0">
           <mat-label class="font2">Email</mat-label>
-          <input type="text" matInput />
+          <input [formControl]="emailForVerification" type="text" matInput />
+          <mat-error
+            class="my-1"
+            *ngIf="emailForVerification?.hasError('required')"
+          >
+            Email is required
+          </mat-error>
+          <mat-error
+            class="my-1"
+            *ngIf="emailForVerification?.hasError('email')"
+          >
+            Please enter a valid email
+          </mat-error>
         </mat-form-field>
+        <span
+          class="text-red-500 text-xs ml-1 relative bottom-2"
+          *ngIf="errorMsg2 && errorMsg2 !== ''"
+          >*{{ errorMsg2 }}</span
+        >
       </div>
-      <div class="mb-5">
+      <div class="mb-3">
         <button
           (click)="resetPassword()"
           mat-flat-button
@@ -142,6 +164,7 @@
       </div>
     </div>
 
+    <!-- Otp verification -->
     <div
       *ngIf="isMailSent"
       class="w-full rounded bg-white mx-14 px-6 py-7 shadow-lg"
@@ -171,11 +194,12 @@
 
       <mat-divider></mat-divider>
 
-      <div class="w-full flex items-center justify-center my-5">
+      <div class="w-full flex items-center justify-center mt-4 mb-2">
         <div class="grid items-center grid-cols-6 gap-2">
           <span class="col-span-1"></span>
           <mat-form-field appearance="outline" class="col-span-1">
             <input
+              [(ngModel)]="otpDigit1"
               type="text"
               #txt1
               maxlength="1"
@@ -185,6 +209,7 @@
           </mat-form-field>
           <mat-form-field appearance="outline" class="col-span-1">
             <input
+              [(ngModel)]="otpDigit2"
               type="text"
               #txt2
               maxlength="1"
@@ -194,6 +219,7 @@
           </mat-form-field>
           <mat-form-field appearance="outline" class="col-span-1">
             <input
+              [(ngModel)]="otpDigit3"
               type="text"
               #txt3
               maxlength="1"
@@ -203,6 +229,7 @@
           </mat-form-field>
           <mat-form-field appearance="outline" class="col-span-1">
             <input
+              [(ngModel)]="otpDigit4"
               type="text"
               #txt4
               maxlength="1"
@@ -210,11 +237,30 @@
               (keyup)="move($event, txt3, txt4, '')"
             />
           </mat-form-field>
+
           <span class="col-span-1"></span>
         </div>
       </div>
-      <div class="mb-5">
-        <button mat-flat-button class="!text-white w-full" color="primary">
+      <div class="text-center">
+        <span
+          class="w-full text-red-500 text-center relative bottom-4 text-xs ml-1"
+          *ngIf="errorMsg3 && errorMsg3 !== ''"
+          >*{{ errorMsg3 }}</span
+        >
+      </div>
+      <div class="mb-3">
+        <button
+          (click)="otpVerify()"
+          [disabled]="
+            otpDigit1 === '' ||
+            otpDigit2 === '' ||
+            otpDigit3 === '' ||
+            otpDigit4 === ''
+          "
+          mat-flat-button
+          class="!text-white w-full"
+          color="primary"
+        >
           Verify
         </button>
       </div>
@@ -224,6 +270,86 @@
           class="text-cyan-600 cursor-pointer hover:underline"
           >Resend OTP</span
         >
+      </div>
+    </div>
+
+    <div
+      *ngIf="isChangePassword"
+      class="w-full rounded bg-white mx-14 px-6 py-7 shadow-lg"
+    >
+      <div class="flex flex-col justify-center items-center mb-3">
+        <div>
+          <img class="h-8" src="../../assets/logo.png" />
+        </div>
+        <div>
+          <span class="font2 font-bold text-2xl">Change Password</span>
+        </div>
+        <div>
+          <span class="font2 text-sm text-gray-400"
+            >Update your password...</span
+          >
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div>
+        <div class="flex flex-col mt-5 mb-3.5">
+          <mat-form-field class="">
+            <mat-label class="font2">New Password</mat-label>
+            <input type="password" matInput [formControl]="newPassword" />
+            <mat-error class="my-1" *ngIf="newPassword?.hasError('required')">
+              Password is required
+            </mat-error>
+            <mat-error class="my-1" *ngIf="newPassword?.hasError('minlength')">
+              Password must contains atleast 6 characters
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="mt-2">
+            <mat-label class="font2">Confirm Password</mat-label>
+            <input type="password" matInput [formControl]="confirmPassword" />
+            <mat-error
+              class="my-1"
+              *ngIf="confirmPassword?.hasError('required')"
+            >
+              Confirm Password is required
+            </mat-error>
+            <mat-error
+              class="my-1"
+              *ngIf="confirmPassword?.hasError('minlength')"
+            >
+              Password must contains atleast 6 characters
+            </mat-error>
+          </mat-form-field>
+          <span
+            class="text-red-500 text-xs ml-1"
+            *ngIf="
+              confirmPassword?.value !== '' &&
+              !confirmPassword?.hasError('minlength') &&
+              confirmPassword?.value !== newPassword?.value
+            "
+          >
+            *Password and Confirm Password doesn't match
+          </span>
+          <span
+            class="text-red-500 text-xs ml-1 absolute"
+            *ngIf="errorMsg && errorMsg !== ''"
+            >*{{ errorMsg }}</span
+          >
+        </div>
+        <div class="mb-3">
+          <button
+            (click)="createNewPassword()"
+            [disabled]="
+              !newPassword.valid ||
+              !confirmPassword.valid ||
+              newPassword.value !== confirmPassword.value
+            "
+            mat-flat-button
+            class="!text-white w-full"
+            color="primary"
+          >
+            Create New Password
+          </button>
+        </div>
       </div>
     </div>
   </div>
