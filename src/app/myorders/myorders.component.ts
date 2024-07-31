@@ -1,26 +1,39 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { MyordersService } from './myorders.service';
+import { AuthService } from '../auth/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Purchase } from '../types/common-type';
 
 @Component({
   selector: 'app-myorders',
   templateUrl: './myorders.component.html',
   styleUrls: ['./myorders.component.scss']
 })
-export class MyordersComponent {
+export class MyordersComponent implements OnInit {
 
-  orderData: {
-    orderId: number;
-    date: Date,
-    products: String,
-    price: number,
-    status: String,
-
-  }[] = [{
-    orderId: 1,
-    date: new Date(),
-    products: 'Parecetomol(X2)',
-    price: 20,
-    status: 'Out for Delivery'
-  }];
-  displayedColumns: string[] = ['orderId', 'date', 'products', 'price', 'status'];
+  orderData: Purchase[] = [];
+  isLoading: boolean = false;
+  displayedColumns: string[] = ['sno', 'date', 'products', 'price', 'status'];
   dataSource = this.orderData;
+  constructor(private myOrdersService: MyordersService, private authService: AuthService, private matSnackBar: MatSnackBar) {
+
+  }
+  ngOnInit(): void {
+    this.isLoading = true;
+    this.authService.getUserId().subscribe((id) => {
+      this.myOrdersService.getOrders(id).subscribe((data) => {
+        this.isLoading = false
+        if (data?.data) {
+          this.orderData = data.data;
+          this.dataSource = this.orderData;
+        }
+
+      });
+    }, (error) => {
+      this.isLoading = false;
+      this.matSnackBar.open("Please try again later", "", {
+        duration: 2000
+      });
+    })
+  }
 }

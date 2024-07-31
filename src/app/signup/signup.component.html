@@ -1,233 +1,194 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title></title>
-  </head>
-  <body>
+<div [formGroup]="signUpForm" class="h-full w-full flex flex-row">
+  <div class="w-full sm:w-1/4 md:w-1/2 relative">
+    <img
+      class="h-full w-full object-cover opacity-100"
+      src="../../assets/doctor3.jpg"
+    />
     <div
-      class="min-h-full bg-gradient-to-r py-10 from-teal-50 to-teal-200 flex items-center justify-center"
-    >
-      <div class="bg-white h-full max-w-md w-full">
-        <mat-tab-group>
-          <mat-tab label="Doctor">
-            <div class="flex justify-center items-center">
-              <div
-                class="bg-white-500 border-solid border-2 border-black-600 max-w-md px-11 py-10"
-              >
-                <p class="py-1 text-3xl">SIGNUP</p>
+      class="absolute inset-0 bg-gradient-to-b from-cyan-100 from-40% to-cyan-600 opacity-60"
+    ></div>
+  </div>
+  <div
+    class="w-full sm:w-3/4 md:w-1/2 absolute sm:relative h-full bg-cyan-50 py-20 flex items-center"
+  >
+    <div class="w-full rounded bg-white mx-14 my-10 px-6 py-7 shadow-lg">
+      <div class="flex flex-col justify-center items-center mb-3">
+        <div>
+          <img class="h-8" src="../../assets/logo.png" />
+        </div>
+        <div>
+          <span class="font2 font-bold text-2xl">Create an account</span>
+        </div>
+        <div>
+          <span class="font2 text-sm text-gray-400"
+            >Welcome to Royal Clinic</span
+          >
+        </div>
+      </div>
+      <mat-divider></mat-divider>
 
-                <div class="flex flex-wrap mb-4">
-                  <div class="w-1/2 pr-2">
-                    <input
-                      class="w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
-                      type="text"
-                      name="firstname"
-                      placeholder="First Name"
-                      required
-                    />
-                  </div>
-                  <div class="w-1/2 pl-2">
-                    <input
-                      class="w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
-                      type="text"
-                      name="lastname"
-                      placeholder="Last Name"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <input
-                  class="mb-3 w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
-                  type="text"
-                  name="username"
-                  placeholder="Email Address"
-                  required
-                />
-
-                <div class="flex flex-wrap mb-4">
-                  <div class="w-1/2 pr-2">
-                    <input
-                      class="w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
-                      type="password"
-                      name="password"
-                      placeholder="Password"
-                      required
-                    />
-                  </div>
-                  <div class="w-1/2 pl-2">
-                    <input
-                      class="w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
-                      type="password"
-                      name="confirm_password"
-                      placeholder="Confirm Password"
-                      required
-                    />
-                  </div>
-                </div>
-                <div class="flex flex-wrap mb-4">
-                  <div class="w-1/2 pr-2">
-                    <select
-                      class="w-full h-10 px-3 py-2 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
-                      name="gender"
-                    >
-                      <option disabled selected>Choose a gender</option>
-                      <option>Male</option>
-                      <option>Female</option>
-                      <option>Other</option>
-                    </select>
-                  </div>
-                  <div class="w-1/2 pl-2">
-                    <input
-                      class="w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500 font-sans"
-                      type="number"
-                      min="0"
-                      max="200"
-                      name="age"
-                      placeholder="Age"
-                      required
-                    />
-                  </div>
-                </div>
-                <input
-                  class="mb-3 w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
-                  type="text"
-                  name="specialist"
-                  placeholder="Area specialized in"
-                  required
-                />
-                <input
-                  type="checkbox"
-                  name="termsAndCond"
-                  value="termsAndCond"
-                  class="text-base"
-                />&nbsp;&nbsp;I agree to the terms and conditions<br /><br />
-
-                <button
-                  mat-flat-button
-                  class="!bg-teal-600 flex justify-center w-full !text-white"
-                >
-                  Sign Up</button
-                ><br /><br />
-                <p class="text-base">
-                  Already have an account?&nbsp;&nbsp;<a
-                    routerLink="/login"
-                    class="text-blue-600 font-semibold"
-                    >Sign in here</a
-                  >
-                </p>
-              </div>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="Patient">
-            <div class="flex justify-center items-center">
-              <div
-                class="bg-white-500 border-solid border-2 border-black-600 max-w-md px-11 py-16"
-              >
-                <p class="py-1 text-3xl">SIGNUP</p>
-
-                <div class="flex flex-wrap mb-4">
-                  <div class="w-1/2 pr-2">
-                    <input
-                      class="w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
-                      type="text"
-                      name="firstname"
-                      placeholder="First Name"
-                      required
-                    />
-                  </div>
-                  <div class="w-1/2 pl-2">
-                    <input
-                      class="w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
-                      type="text"
-                      name="lastname"
-                      placeholder="Last Name"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <input
-                  class="mb-3 w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
-                  type="text"
-                  name="username"
-                  placeholder="Email Address"
-                  required
-                />
-
-                <div class="flex flex-wrap mb-4">
-                  <div class="w-1/2 pr-2">
-                    <input
-                      class="w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
-                      type="password"
-                      name="password"
-                      placeholder="Password"
-                      required
-                    />
-                  </div>
-                  <div class="w-1/2 pl-2">
-                    <input
-                      class="w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
-                      type="password"
-                      name="confirm_password"
-                      placeholder="Confirm Password"
-                      required
-                    />
-                  </div>
-                </div>
-                <div class="flex flex-wrap mb-4">
-                  <div class="w-1/2 pr-2">
-                    <select
-                      class="w-full h-10 px-3 py-2 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500"
-                      name="gender"
-                    >
-                      <option disabled selected>Choose a gender</option>
-                      <option>Male</option>
-                      <option>Female</option>
-                      <option>Other</option>
-                    </select>
-                  </div>
-                  <div class="w-1/2 pl-2">
-                    <input
-                      class="w-full h-10 px-3 py-3 border-2 border-gray-300 rounded focus:outline-none focus:border-red-500 font-sans"
-                      type="number"
-                      min="0"
-                      max="200"
-                      name="age"
-                      placeholder="Age"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <input
-                  type="checkbox"
-                  name="termsAndCond"
-                  value="termsAndCond"
-                  class="text-base"
-                />&nbsp;&nbsp;I agree to the terms and conditions<br /><br />
-
-                <button
-                  mat-flat-button
-                  class="!bg-teal-600 flex justify-center w-full !text-white"
-                >
-                  Sign Up</button
-                ><br /><br />
-                <p class="text-base">
-                  Already have an account?&nbsp;&nbsp;<a
-                    routerLink="/login"
-                    class="text-blue-600 font-semibold"
-                    >Sign in here</a
-                  >
-                </p>
-              </div>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
+      <div class="flex flex-col mt-5 mb-3">
+        <div class="grid grid-cols-2">
+          <mat-form-field class="col-span-1 m-1">
+            <mat-label class="font2">First Name</mat-label>
+            <input formControlName="firstName" type="text" matInput />
+            <mat-error
+              class="my-1"
+              *ngIf="signUpForm.get('firstName')?.hasError('required')"
+            >
+              First Name is required
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="col-span-1 m-1">
+            <mat-label class="font2">Last Name</mat-label>
+            <input formControlName="lastName" type="text" matInput />
+            <mat-error
+              class="my-1"
+              *ngIf="signUpForm.get('lastName')?.hasError('required')"
+            >
+              Last Name is required
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="col-span-1 m-1">
+            <mat-label class="font2">Gender</mat-label>
+            <mat-select formControlName="gender">
+              <mat-option value="male">Male</mat-option>
+              <mat-option value="female">Female</mat-option>
+            </mat-select>
+            <mat-error
+              class="my-1"
+              *ngIf="signUpForm.get('gender')?.hasError('required')"
+            >
+              Gender is required
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="col-span-1 m-1">
+            <mat-label class="font2">Age</mat-label>
+            <input formControlName="age" type="number" min="1" matInput />
+            <mat-error
+              class="my-1"
+              *ngIf="signUpForm.get('age')?.hasError('required')"
+            >
+              Age is required
+            </mat-error>
+            <mat-error
+              class="my-1"
+              *ngIf="signUpForm.get('age')?.hasError('min')"
+            >
+              Age must be greater than 0
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="col-span-2 m-1">
+            <mat-label class="font2">Email</mat-label>
+            <input formControlName="email" type="text" matInput />
+            <mat-error
+              class="my-1"
+              *ngIf="signUpForm.get('email')?.hasError('required')"
+            >
+              Email is required
+            </mat-error>
+            <mat-error
+              class="my-1"
+              *ngIf="signUpForm.get('email')?.hasError('email')"
+            >
+              Please enter a valid email
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="col-span-2 m-1">
+            <mat-label class="font2">Password</mat-label>
+            <input formControlName="password" type="password" matInput />
+            <mat-error
+              class="my-1"
+              *ngIf="signUpForm.get('password')?.hasError('minlength')"
+            >
+              Password must be at least 6 characters
+            </mat-error>
+            <mat-error
+              class="my-1"
+              *ngIf="signUpForm.get('password')?.hasError('required')"
+            >
+              Password is required
+            </mat-error>
+          </mat-form-field>
+          <span
+            class="text-red-500 text-sm ml-2"
+            *ngIf="errorMsg && errorMsg !== ''"
+            >*{{ errorMsg }}</span
+          >
+        </div>
+      </div>
+      <div class="mb-3">
+        <button
+          [disabled]="!signUpForm.valid"
+          (click)="signUp()"
+          mat-flat-button
+          class="!text-white w-full"
+          color="primary"
+        >
+          Sign Up
+        </button>
+      </div>
+      <div class="flex justify-center">
+        <span class="text-sm font-bold font2"
+          >Already have an account? &nbsp;</span
+        ><span
+          [routerLink]="['/login']"
+          class="text-cyan-600 cursor-pointer hover:underline"
+          >Sign In</span
+        >
       </div>
     </div>
-  </body>
-</html>
+  </div>
+</div>
+
+<!-- <div
+  class="min-h-full bg-gradient-to-r from-cyan-50 to-cyan-200 flex items-center justify-center"
+>
+  <div
+    class="bg-white max-w-md w-full rounded-lg shadow-lg py-3 border-solid border-2 border-black-600"
+  >
+    <div class="flex justify-center items-center">
+      <div class="bg-white-500 max-w-md px-11 py-10">
+        <p class="py-1 text-3xl">LOGIN</p>
+
+        <input
+          class="mb-2 w-72 h-10 text-base px-3 py-3 border-solid border-2 border-gray-300 box-border transition duration-500 focus:outline-none focus:border-red-500"
+          type="text"
+          name="username"
+          placeholder="Email Address"
+          required
+        />
+        <input
+          class="w-72 h-10 text-base px-3 py-3 border-solid border-2 border-gray-300 box-border transition duration-500 focus:outline-none focus:border-red-500"
+          type="password"
+          name="password"
+          placeholder="Password"
+          required
+        />
+        <br /><br />
+        <input
+          class="text-base"
+          type="checkbox"
+          name="rememberMe"
+          value="remember-me"
+          class="rememberMe"
+        />&nbsp;&nbsp;Remember Me <br /><br />
+
+        <button
+          mat-flat-button
+          class="!bg-teal-600 flex justify-center w-full !text-white"
+        >
+          Login</button
+        ><br /><br />
+        <p class="text-base">
+          New Here?&nbsp;&nbsp;<a
+            routerLink="/signup"
+            class="text-blue-600 font-semibold"
+            >Create new account</a
+          >
+        </p>
+      </div>
+    </div>
+   
+  </div>
+</div> -->
