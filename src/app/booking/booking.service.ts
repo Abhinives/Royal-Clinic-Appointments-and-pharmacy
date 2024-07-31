@@ -22,4 +22,8 @@ export class BookingService {
   getDoctorDetails(specializedIn: String): Observable<any> {
     return this._httpClient.get(`${this._configService.apiBaseUrl}/doctor/${specializedIn}`);
   }
+
+  scheduleAppointment(patientId: string | null, doctorId: String, payload: any): Observable<any> {
+    return this._httpClient.post(`${this._configService.apiBaseUrl}/patient/slot/${patientId}/${doctorId}`, payload);
+  }
 }

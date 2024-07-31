@@ -1,7 +1,9 @@
 <div
   class="bg-gradient-to-r py-10 from-cyan-50 to-cyan-200 min-h-full w-full flex flex-col items-center"
 >
-  <div class="w-full ml-80 mt-5 mb-10 flex flex-col items-start">
+  <div
+    class="w-full ml-24 md:ml-80 mt-5 mb-4 md:mb-10 flex flex-col items-start"
+  >
     <div>
       <span class="text-4xl font-bold font2">Medical Appointment</span>
     </div>
@@ -26,7 +28,11 @@
         [linear]="true"
         #stepper
       >
-        <mat-step class="" label="Fill the form">
+        <mat-step
+          [stepControl]="bookingFormGroup"
+          class=""
+          label="Fill the form"
+        >
           <div class="grid grid-cols-2">
             <mat-form-field class="col-span-2 md:col-span-1 my-2 md:my-4 mr-4">
               <mat-label>First Name </mat-label>
@@ -48,8 +54,8 @@
             <mat-form-field class="col-span-2 md:col-span-1 my-2 md:my-4 mr-4">
               <mat-label>Gender </mat-label>
               <mat-select formControlName="gender">
-                <mat-option value="male">Male</mat-option>
-                <mat-option value="female">Female</mat-option>
+                <mat-option value="Male">Male</mat-option>
+                <mat-option value="Female">Female</mat-option>
               </mat-select>
               <mat-error
                 *ngIf="bookingFormGroup.get('gender')?.hasError('required')"
@@ -156,19 +162,29 @@
             </mat-form-field>
           </div>
         </mat-step>
-        <mat-step label="Choose Slot">
-          <mat-accordion class="col-span-2 mb-8 mt-2 mr-4 bg-gray-100">
-            <mat-expansion-panel #panel hideToggle class="p-3">
+        <mat-step label="Choose Slot" class="">
+          <mat-accordion class="col-span-2 mb-8 mt-2 bg-gray-100">
+            <mat-expansion-panel
+              #panel
+              hideToggle
+              class="min-w-72 relative right-16 md:right-0"
+            >
               <mat-expansion-panel-header class="">
                 <mat-panel-title class="flex flex-row">
                   <div class="flex flex-col w-full">
-                    <div class="flex items-center w-full mt-3 mb-3">
-                      <span class="mr-5">Available Slots:</span>
+                    <div
+                      class="flex flex-col md:flex-row items-center w-full mt-3 mb-3"
+                    >
+                      <span class="mr-1 md:mr-5 text-center"
+                        >Available Slots:</span
+                      >
 
-                      <div class="h-2 w-2 rounded bg-cyan-500"></div>
-                      <span class="text-gray-600 mx-1">Available</span>
-                      <div class="h-2 w-2 rounded bg-red-500 ml-3"></div>
-                      <span class="text-gray-600 mx-1">Occupied</span>
+                      <div class="flex items-center">
+                        <div class="h-2 w-2 rounded bg-cyan-500"></div>
+                        <span class="text-gray-600 mx-1">Available</span>
+                        <div class="h-2 w-2 rounded bg-red-500 ml-3"></div>
+                        <span class="text-gray-600 mx-1">Occupied</span>
+                      </div>
                     </div>
                   </div>
                 </mat-panel-title>
@@ -193,7 +209,7 @@
                       }"
                       *ngFor="let slot of defaultTimeSlot; let i = index"
                       mat-flat-button
-                      class="!text-white rounded col-span-1 mr-3 my-2"
+                      class="!text-white rounded col-span-4 md:col-span-2 lg:col-span-1 mr-3 my-2"
                     >
                       {{ slot.startTime }} - {{ slot.endTime }}
                     </button>

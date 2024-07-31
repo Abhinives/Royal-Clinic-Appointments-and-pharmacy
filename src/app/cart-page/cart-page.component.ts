@@ -37,31 +37,36 @@ export class CartPageComponent implements OnInit {
       console.log(data);
     })
     this.selectedIndices.valueChanges.subscribe((data) => {
-      let cnt = 0;
-      this.totalCost = 0;
-      data.forEach((d: any, index: number) => {
-        console.log(d);
-        if (d) {
-
-          this.totalCost += this.carts.carts[index].actualCost * this.carts.carts[index].qty;
-          this.isSelected = true;
-          cnt++;
-        }
-        if (cnt === 0) {
-          this.isSelected = false;
-        }
-      })
+      this.updateTotalCost();
     })
 
   }
 
+  updateTotalCost(): void {
+    let data = this.selectedIndices.value;
+    let cnt = 0;
+    this.totalCost = 0;
+    data.forEach((d: any, index: number) => {
+      console.log(d);
+      if (d) {
+        if (this.quantities.at(index).valid) {
+          this.totalCost += this.carts.carts[index].actualCost * this.quantities.at(index).value;
+          this.isSelected = true;
+          cnt++;
+        }
 
+      }
+      if (cnt === 0) {
+        this.isSelected = false;
+      }
+    })
+  }
   getCarts(): void {
     this.cartPageService.getCarts(this.userId).subscribe((data) => {
       this.carts = data;
 
       this.carts.carts.forEach(cart => {
-        this.addQuantityControl(cart.qty);
+        this.addQuantityControl(cart.qty, cart.totalQty);
         this.selectedIndices.push(new FormControl(null));  // Initialize with default quantity 1
       });
 
@@ -69,19 +74,23 @@ export class CartPageComponent implements OnInit {
       console.log(this.cartForm.value);
     })
   }
-  addQuantityControl(quantity: number): void {
-    const control = this.fb.control(quantity, [Validators.required, Validators.min(1)]);
+  addQuantityControl(quantity: number, total: number): void {
+    const control = this.fb.control(quantity, [Validators.required, Validators.min(1), Validators.max(total)]);
     control.valueChanges.pipe(debounceTime(500)).subscribe(value => {
       const index = this.quantities.controls.indexOf(control);
 
-      const payload: { medicineId: String, qty: number } = {
-        medicineId: this.carts.carts[index].medicineId,
-        qty: value ?? 0
-      };
-      this.cartPageService.updateCart(this.userId, payload).subscribe((data) => {
-        console.log("updated");
-        this.getCarts();
-      })
+      if (this.quantities.at(index).valid) {
+        this.updateTotalCost();
+        const payload: { medicineId: String, qty: number } = {
+          medicineId: this.carts.carts[index].medicineId,
+          qty: value ?? 0
+        };
+        this.cartPageService.updateCart(this.userId, payload).subscribe((data) => {
+          console.log("updated");
+          this.getCarts();
+        })
+      }
+
       // Add your custom logic here, e.g., update total cost
     });
     this.quantities.push(control);
@@ -96,18 +105,21 @@ export class CartPageComponent implements OnInit {
   }
 
   goToCheckOutPage(): void {
-    const indices = this.selectedIndices.value;
-    let finalCarts: Cart[] = [];
-    indices.forEach((ind: any, index: number) => {
-      if (ind) {
+    if (this.quantities.valid) {
+      const indices = this.selectedIndices.value;
+      let finalCarts: Cart[] = [];
+      indices.forEach((ind: any, index: number) => {
+        if (ind) {
 
-        finalCarts.push(this.carts.carts[index]);
-      }
-    });
-    console.log(finalCarts);
-    const serializedData = JSON.stringify(finalCarts);
-    console.log(serializedData);
-    this.router.navigate(['/services/medicines/checkout'], { queryParams: { data: serializedData } });
+          finalCarts.push(this.carts.carts[index]);
+        }
+      });
+      console.log(finalCarts);
+      const serializedData = JSON.stringify(finalCarts);
+      console.log(serializedData);
+      this.router.navigate(['/services/medicines/checkout'], { queryParams: { data: serializedData } });
+    }
+
   }
 
   get quantities(): FormArray {

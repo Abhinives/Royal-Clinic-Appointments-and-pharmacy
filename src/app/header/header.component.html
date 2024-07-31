@@ -48,19 +48,41 @@
     <div *ngIf="isLoggedIn" class="mx-1 hidden md:block">
       <mat-menu #menu1="matMenu" class="w-full">
         <button
+          routerLink="/my-bookings"
+          mat-menu-item
+          class="hover:text-cyan-600"
+        >
+          <mat-icon>calendar_today</mat-icon>
+          My Schedules
+        </button>
+
+        <button
           routerLink="/my-orders"
           mat-menu-item
           class="hover:text-cyan-600"
         >
-          <mat-icon>exit_to_app</mat-icon>
+          <mat-icon>event_note</mat-icon>
           My Orders
         </button>
         <button
+          routerLink="services/medicines/cart"
+          mat-menu-item
+          class="hover:text-cyan-600"
+        >
+          <mat-icon>shopping_cart</mat-icon>
+          My Cart
+        </button>
+        <button routerLink="profile" mat-menu-item class="hover:text-cyan-600">
+          <mat-icon>account_circle</mat-icon>
+          My Profile
+        </button>
+
+        <button
           (click)="signOut()"
           mat-menu-item
-          class="flex items-center justify-center hover:text-cyan-600"
+          class="flex items-center justify-center !text-red-500 hover:text-cyan-600"
         >
-          <mat-icon>exit_to_app</mat-icon>
+          <mat-icon class="!text-red-500">exit_to_app</mat-icon>
           Sign Out
         </button>
       </mat-menu>
@@ -79,21 +101,45 @@
         <mat-icon class="">account_circle</mat-icon>
       </button>
     </div>
-    <div *ngIf="isLoggedIn" class="mx-3 block md:hidden">
+    <div *ngIf="isLoggedIn" class="block md:hidden">
       <mat-menu #menu1="matMenu" class="w-full">
         <button
-          (click)="signOut()"
-          mat-icon-button
-          class="flex items-center justify-center !text-cyan-600 !rounded-full"
+          routerLink="/my-bookings"
+          mat-menu-item
+          class="hover:text-cyan-600"
         >
-          <mat-icon>exit_to_app</mat-icon>
+          <mat-icon>calendar_today</mat-icon>
+          My Schedules
         </button>
+
         <button
           routerLink="/my-orders"
           mat-menu-item
           class="hover:text-cyan-600"
         >
+          <mat-icon>event_note</mat-icon>
           My Orders
+        </button>
+        <button
+          routerLink="services/medicines/cart"
+          mat-menu-item
+          class="hover:text-cyan-600"
+        >
+          <mat-icon>shopping_cart</mat-icon>
+          My Cart
+        </button>
+        <button routerLink="profile" mat-menu-item class="hover:text-cyan-600">
+          <mat-icon>account_circle</mat-icon>
+          My Profile
+        </button>
+
+        <button
+          (click)="signOut()"
+          mat-menu-item
+          class="flex items-center justify-center !text-red-500 hover:text-cyan-600"
+        >
+          <mat-icon class="!text-red-500">exit_to_app</mat-icon>
+          Sign Out
         </button>
       </mat-menu>
       <div class="example-sidenav-content mr-2">

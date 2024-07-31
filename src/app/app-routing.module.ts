@@ -13,6 +13,7 @@ import { AuthGuard } from './auth/auth.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { CartPageComponent } from './cart-page/cart-page.component';
 import { CheckoutPageComponent } from './checkout-page/checkout-page.component';
+import { MybookingsComponent } from './mybookings/mybookings.component';
 
 const routes: Routes = [{
   path: '', component: HomeComponent
@@ -38,6 +39,9 @@ const routes: Routes = [{
 },
 {
   path: 'my-orders', component: MyordersComponent, canActivate: [AuthGuard]
+},
+{
+  path: 'my-bookings', component: MybookingsComponent, canActivate: [AuthGuard]
 },
 {
   path: 'services/medicines', component: MedicinesComponent, canActivate: [AuthGuard]

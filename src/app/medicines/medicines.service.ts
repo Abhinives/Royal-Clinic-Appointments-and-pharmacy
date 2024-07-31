@@ -11,7 +11,7 @@ export class MedicinesService {
   constructor(private _httpClient: HttpClient, private _configService: ConfigService) { }
 
   getMedicines(keyword?: String): Observable<any> {
-    return this._httpClient.get(`${this._configService.apiBaseUrl}/medicines/${keyword ?? ''}`);
+    return this._httpClient.get(`${this._configService.apiBaseUrl}/medicines/search/${keyword ?? ''}`);
   }
 
   addToCart(payload: { id: string | null, product: [{ medicineId: string, qty: number }] }): Observable<any> {

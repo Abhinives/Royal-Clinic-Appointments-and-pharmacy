@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ConfigService {
-  public apiBaseUrl: String = 'http://localhost:3000';
+  public apiBaseUrl: String = 'https://royalclinic-backend.onrender.com';
   constructor() { }
 
 

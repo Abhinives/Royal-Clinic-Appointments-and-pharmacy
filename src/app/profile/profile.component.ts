@@ -185,6 +185,9 @@ export class ProfileComponent implements OnInit {
   }
 
 
+  cancelPersonalInfo(): void {
+    this.isEditPersonalInfo = false;
+  }
   cancel(): void {
     this.isEditAddressInfo = false;
     this.isAddAddress = false;

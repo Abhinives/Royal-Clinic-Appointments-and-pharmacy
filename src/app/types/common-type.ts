@@ -35,6 +35,7 @@ export interface Cart {
     name: String,
     medicineId: String,
     qty: number,
+    totalQty: number,
     actualCost: number,
     imageUrl: String
 }
@@ -45,3 +46,28 @@ export interface Carts {
 }
 
 export interface State { id: Number, name: String, iso2: String }
+
+export interface MedicineDetails {
+    _id: string;
+    name: string;
+}
+
+export interface Product {
+    medicineId: string;
+    qty: number;
+    _id: string;
+    medicineDetails: MedicineDetails;
+}
+
+export interface Purchase {
+    _id: string;
+    userId: string;
+    product: Product[];
+    purchasedAmt: number;
+    purchasedDate: string;
+    status: string;
+    addressId: string;
+    deliveryDate: string;
+    paymentMode: string;
+    // __v: number;
+}

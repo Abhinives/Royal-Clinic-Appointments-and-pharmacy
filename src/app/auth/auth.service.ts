@@ -1,3 +1,4 @@
+import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -6,15 +7,17 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class AuthService {
   private loggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  private accessToken$: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
+  private accessToken$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   private userId$: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
 
+  public headers = new HttpHeaders();
   constructor() {
-    const token = localStorage.getItem("accessToken");
-    const userId = localStorage.getItem("userId");
+    const token = sessionStorage.getItem("accessToken");
+    const userId = sessionStorage.getItem("userId");
     console.log(token);
     if (token) {
       console.log("asdf");
+      this.headers = this.headers.set("accessToken", token);
       this.accessToken$.next(token);
       this.loggedIn$.next(true);
       this.userId$.next(userId);
@@ -25,7 +28,7 @@ export class AuthService {
     return this.loggedIn$.asObservable();
   }
 
-  getAccessToken(): Observable<string | null> {
+  getAccessToken(): Observable<string> {
     return this.accessToken$.asObservable();
   }
 
@@ -34,18 +37,22 @@ export class AuthService {
   }
 
   addAuthentication(accessToken: string, userId: string): boolean {
-    localStorage.setItem('accessToken', accessToken);
-    localStorage.setItem('userId', userId);
+    sessionStorage.setItem('accessToken', accessToken);
+    sessionStorage.setItem('userId', userId);
     this.accessToken$.next(accessToken);
+    this.headers = this.headers.set("accessToken", accessToken);
+    console.log(this.headers.get("accessToken"));
     this.loggedIn$.next(true);
     this.userId$.next(userId);
     return true;
   }
 
   logout(): void {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('userId');
-    this.accessToken$.next(null);
+    sessionStorage.removeItem('accessToken');
+    sessionStorage.removeItem('userId');
+    this.headers = this.headers.delete("accessToken");
+
+    this.accessToken$.next('');
     this.loggedIn$.next(false);
     this.userId$.next(null);
   }

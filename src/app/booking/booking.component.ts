@@ -8,6 +8,8 @@ import { MatExpansionPanel } from '@angular/material/expansion';
 import { BookingService } from './booking.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { debounceTime } from 'rxjs';
+import { AuthService } from '../auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-booking',
@@ -21,7 +23,7 @@ export class BookingComponent implements OnInit, AfterViewInit {
   doctors: String[] = ['Ram', 'Kumar'];
   doctorDetails: { _id: String, firstName: String, specializedIn: String, generalFee: Number }[] = [];
   currentDate: Date = new Date();
-
+  userId: string | null = null;
   defaultTimeSlot: { startTime: String, endTime: String, isBooked?: boolean }[] = [
   ];
   startHour = ((new Date().getHours()) + 1) % 24;
@@ -62,7 +64,7 @@ export class BookingComponent implements OnInit, AfterViewInit {
 
 
 
-  constructor(private cdr: ChangeDetectorRef, private snackbar: MatSnackBar, private _dialog: MatDialog, private _formBuilder: FormBuilder, private bookingService: BookingService) {
+  constructor(private router: Router, private cdr: ChangeDetectorRef, private snackbar: MatSnackBar, private _dialog: MatDialog, private _formBuilder: FormBuilder, private authService: AuthService, private bookingService: BookingService) {
 
     console.log(this.startHour);
     this.nextDate.setDate(this.currentDate.getDate() + 1);
@@ -75,14 +77,16 @@ export class BookingComponent implements OnInit, AfterViewInit {
       specialist: ['', Validators.required],
       doctorId: ['', Validators.required],
       phone: ['', [Validators.required, phoneValidator]],
-      date: ['', Validators.required],
+
       fee: [{ value: 0, disabled: true }, Validators.required]
 
     })
 
   }
   ngOnInit(): void {
-
+    this.authService.getUserId().subscribe((id) => {
+      this.userId = id;
+    })
     this.bookingFormGroup.get("doctorId")?.valueChanges.subscribe((data) => {
       const findDoctor = this.doctorDetails.find(doctor => doctor._id === data);
       if (findDoctor) {
@@ -177,35 +181,61 @@ export class BookingComponent implements OnInit, AfterViewInit {
     let startTime: any;
     let endTime: any;
     let date = '';
-    console.log(this.defaultTimeSlot[index]);
+
     if (this.selectedTabIndex === 0) {
       date = this.currentDate.toISOString().split("T")[0];
 
       // Initialize start and end time
-      startTime = endTime = new Date(this.currentDate);
-
+      startTime = new Date(this.currentDate);
+      endTime = new Date(this.currentDate);
       // Extract hours from defaultTimeSlot
       const startHour = Number(this.defaultTimeSlot[index].startTime.split(":")[0]);
       const endHour = Number(this.defaultTimeSlot[index].endTime.split(":")[0]);
 
       // Set hours in local time
-      console.log(startTime);
-      console.log(startTime.setHours(startHour));
+
+      startTime.setHours(startHour)
       startTime.setMinutes(0);
       startTime.setSeconds(0);
       startTime.setMilliseconds(0);
-      console.log(startTime);
 
+      endTime.setHours(endHour)
+      endTime.setMinutes(0);
+      endTime.setSeconds(0);
+      endTime.setMilliseconds(0);
 
-      console.log('Start Time:', this.formatLocalDateToUTCString(startTime)); // Local time
+      // Local time
       // Local time
 
     }
     else {
+      date = this.nextDate.toISOString().split("T")[0];
 
 
+      // Initialize start and end time
+      startTime = new Date(this.nextDate);
+      endTime = new Date(this.nextDate);
+      // Extract hours from defaultTimeSlot
+      const startHour = Number(this.defaultTimeSlot[index].startTime.split(":")[0]);
+      const endHour = Number(this.defaultTimeSlot[index].endTime.split(":")[0]);
+
+      // Set hours in local time
+
+      startTime.setHours(startHour)
+      startTime.setMinutes(0);
+      startTime.setSeconds(0);
+      startTime.setMilliseconds(0);
+
+      endTime.setHours(endHour)
+      endTime.setMinutes(0);
+      endTime.setSeconds(0);
+      endTime.setMilliseconds(0);
     }
 
+
+    console.log(date);
+    console.log(this.formatLocalDateToUTCString(startTime));
+    console.log(this.formatLocalDateToUTCString(endTime));
 
     const dialog = this._dialog.open(DialogComponent, {
       width: '400px'
@@ -213,6 +243,7 @@ export class BookingComponent implements OnInit, AfterViewInit {
     dialog.afterClosed().subscribe((isPaid) => {
       if (isPaid) {
         const bookingInfo = this.bookingFormGroup.value;
+
         const payload = {
           firstName: bookingInfo.firstName,
           lastName: bookingInfo.lastName,
@@ -220,12 +251,26 @@ export class BookingComponent implements OnInit, AfterViewInit {
           age: bookingInfo.age,
           email: bookingInfo.email,
           phone: bookingInfo.phone,
-          consultingFee: bookingInfo.fee,
-
+          consultingFee: this.bookingFormGroup.get('fee')?.value,
+          bookingDate: date,
+          startTime: this.formatLocalDateToUTCString(startTime),
+          endTime: this.formatLocalDateToUTCString(endTime)
         };
+
+        this.bookingService.scheduleAppointment(this.userId, bookingInfo.doctorId, payload).subscribe((data) => {
+          this.snackbar.open("Slot booked successfully", "", {
+            duration: 2000
+          });
+          this.router.navigate(['/']);
+        }, (error) => {
+          this.snackbar.open("Please try again later", "", {
+            duration: 2000
+          });
+        })
 
       }
     })
+
   }
 
   onTabChanged(event: any): void {

@@ -31,11 +31,14 @@
             >
           </div>
         </div>
+        <div *ngIf="data.qty <= 5" class="text-red-500 text-sm mb-2">
+          <span>Only {{ data.qty }} stocks left</span>
+        </div>
       </div>
-      <div class="mt-2 grid grid-cols-3">
-        <span class="col-span-1"></span>
-        <span class="col-span-1"></span>
-        <mat-form-field class="col-span-1" class="quantity-field">
+      <div class="mt-2 grid grid-cols-1 md:grid-cols-3">
+        <span class="hidden md:block col-span-1"></span>
+        <span class="hidden md:block col-span-1"></span>
+        <mat-form-field class="!col-span-1 w-full" class="quantity-field">
           <mat-label>Quantity</mat-label>
           <input
             matInput
@@ -49,12 +52,20 @@
     </div>
     <div class="w-full">
       <button
+        *ngIf="data.qty !== 0"
         (click)="addProducts()"
         class="w-full !text-white"
         mat-flat-button
         color="primary"
       >
         Add to Cart
+      </button>
+      <button
+        *ngIf="data.qty === 0"
+        class="w-full !text-black !bg-gray-300"
+        mat-flat-button
+      >
+        Out of stock
       </button>
     </div>
   </div>

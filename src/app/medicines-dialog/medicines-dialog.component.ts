@@ -14,7 +14,7 @@ export class MedicinesDialogComponent implements OnInit {
   price: number = 0;
   userId: string | null = null;
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private _dialogRef: MatDialogRef<MedicinesDialogComponent>, private authService: AuthService) {
-    this.quantity = new FormControl(1);
+    this.quantity = new FormControl(1, [Validators.max(data.qty)]);
     this.authService.getUserId().subscribe((data) => {
       this.userId = data;
     })

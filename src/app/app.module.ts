@@ -49,6 +49,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { DeleteAddressDialogComponent } from './profile/delete-address-dialog/delete-address-dialog.component';
 import { CartPageComponent } from './cart-page/cart-page.component';
 import { CheckoutPageComponent } from './checkout-page/checkout-page.component';
+import { MybookingsComponent } from './mybookings/mybookings.component';
 
 
 @NgModule({
@@ -75,6 +76,7 @@ import { CheckoutPageComponent } from './checkout-page/checkout-page.component';
     DeleteAddressDialogComponent,
     CartPageComponent,
     CheckoutPageComponent,
+    MybookingsComponent,
 
   ],
   imports: [
