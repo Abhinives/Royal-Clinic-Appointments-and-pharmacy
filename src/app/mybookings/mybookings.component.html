@@ -85,9 +85,11 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
     </div>
-
+    <div *ngIf="isLoading" class="flex justify-center my-5">
+      <mat-spinner [diameter]="40"></mat-spinner>
+    </div>
     <div
-      *ngIf="dataSource.length === 0"
+      *ngIf="dataSource.length === 0 && !isLoading"
       class="flex flex-col justify-center items-center mt-3 my-5"
     >
       <div class="font2 my-2 text-center">

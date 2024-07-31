@@ -10,7 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class MybookingsComponent implements OnInit {
   userId: string | null = null;
-
+  isLoading: boolean = false;
   tableData: {
     doctorName: String,
     gender: String,
@@ -46,6 +46,7 @@ export class MybookingsComponent implements OnInit {
   }
 
   getBookings(): void {
+    this.isLoading = true;
     this.mybookingsService.getBookings(this.userId).subscribe((data) => {
       console.log(data);
       this.tableData = [];
@@ -87,7 +88,13 @@ export class MybookingsComponent implements OnInit {
         this.tableData.push(updatedData);
       });
       this.dataSource = this.tableData;
+      this.isLoading = false;
       console.log(this.dataSource);
+    }, (error) => {
+      this.isLoading = false;
+      this.snackBar.open("Please try again later", "", {
+        duration: 2000
+      });
     });
   }
   constructor(private mybookingsService: MybookingsService, private authService: AuthService, private snackBar: MatSnackBar) {
@@ -95,6 +102,7 @@ export class MybookingsComponent implements OnInit {
   }
 
   cancelBooking(index: number): void {
+    this.isLoading = true;
     let payload: {
       doctorId: String,
       scheduleId: String,
@@ -106,13 +114,16 @@ export class MybookingsComponent implements OnInit {
     };
 
     this.mybookingsService.cancelBooking(payload).subscribe((data) => {
+
       this.dataSource = [];
       this.getBookings();
+      this.isLoading = false;
       this.snackBar.open("Cancelled Successfully", "", {
         duration: 2000
       });
 
     }, (error) => {
+      this.isLoading = false;
       this.snackBar.open("Please try again later", "", {
         duration: 2000
       });

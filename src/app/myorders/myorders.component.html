@@ -15,13 +15,16 @@
       </div>
     </div>
     <mat-divider class="mb-10"></mat-divider>
-    <div class="table-dummy-container" *ngIf="isLoading"></div>
+    <div *ngIf="isLoading" class="flex justify-center my-5">
+      <mat-spinner [diameter]="40"></mat-spinner>
+    </div>
     <div
       *ngIf="dataSource.length === 0 && !isLoading"
       class="flex flex-col justify-center items-center mt-3 my-5"
     >
       <div class="font2 my-2 text-center">You have not made any orders...</div>
     </div>
+
     <div
       *ngIf="dataSource.length !== 0 && !isLoading"
       class="my-8 table-container overflow-x-auto w-full md:w-full rounded-xl shadow-lg"
