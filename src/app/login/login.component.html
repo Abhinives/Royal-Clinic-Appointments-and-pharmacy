@@ -80,12 +80,15 @@
         <div class="mb-3">
           <button
             (click)="login()"
-            [disabled]="!loginFormGroup.valid"
+            [disabled]="!loginFormGroup.valid || isLoading"
             mat-flat-button
             class="!text-white w-full"
             color="primary"
           >
-            Sign In
+            <span *ngIf="isLoading">
+              <mat-spinner [diameter]="15"></mat-spinner>
+            </span>
+            <span *ngIf="!isLoading"> Sign in </span>
           </button>
         </div>
       </div>
@@ -146,11 +149,15 @@
       <div class="mb-3">
         <button
           (click)="resetPassword()"
+          [disabled]="isLoading"
           mat-flat-button
           class="!text-white w-full"
           color="primary"
         >
-          Reset
+          <span *ngIf="isLoading">
+            <mat-spinner [diameter]="15"></mat-spinner>
+          </span>
+          <span *ngIf="!isLoading"> Reset </span>
         </button>
       </div>
       <div class="flex justify-center">
@@ -255,13 +262,17 @@
             otpDigit1 === '' ||
             otpDigit2 === '' ||
             otpDigit3 === '' ||
-            otpDigit4 === ''
+            otpDigit4 === '' ||
+            isLoading
           "
           mat-flat-button
           class="!text-white w-full"
           color="primary"
         >
-          Verify
+          <span *ngIf="isLoading">
+            <mat-spinner [diameter]="15"></mat-spinner>
+          </span>
+          <span *ngIf="!isLoading"> Verify </span>
         </button>
       </div>
       <div class="flex justify-center">
@@ -341,13 +352,17 @@
             [disabled]="
               !newPassword.valid ||
               !confirmPassword.valid ||
-              newPassword.value !== confirmPassword.value
+              newPassword.value !== confirmPassword.value ||
+              isLoading
             "
             mat-flat-button
             class="!text-white w-full"
             color="primary"
           >
-            Create New Password
+            <span *ngIf="isLoading">
+              <mat-spinner [diameter]="15"></mat-spinner>
+            </span>
+            <span *ngIf="!isLoading"> Create New Password </span>
           </button>
         </div>
       </div>
