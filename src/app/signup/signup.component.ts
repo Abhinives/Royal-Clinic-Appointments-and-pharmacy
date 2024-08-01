@@ -27,6 +27,9 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {
     this.signUpForm.valueChanges.subscribe((data) => {
       console.log(data);
+    });
+    this.signUpForm.get('email')?.valueChanges.subscribe((data) => {
+      this.errorMsg = '';
     })
   }
 
