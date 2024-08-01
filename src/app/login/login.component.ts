@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   isForgetPassword: boolean = false;
   isMailSent: boolean = false;
   isChangePassword: boolean = false;
+  isLoading: boolean = false;
   loginFormGroup: FormGroup;
   errorMsg: String = '';
   errorMsg2: String = '';
@@ -51,6 +52,7 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
+    this.isLoading = true;
     const body: { email: String, password: String } = {
       email: this.loginFormGroup.value.email,
       password: this.loginFormGroup.value.password
@@ -58,10 +60,12 @@ export class LoginComponent implements OnInit {
     this._loginService.login(body).subscribe((data) => {
       console.log(data);
       const isLoggedIn = this.authService.addAuthentication(data.accessToken, data.userId);
+      this.isLoading = false;
       if (isLoggedIn) {
         this.router.navigate(['/home']);
       }
     }, (error) => {
+      this.isLoading = false;
       this.errorMsg = error?.error?.error;
       if (!this.errorMsg) {
         this.snackBar.open("Please try again later", "", {
@@ -92,6 +96,7 @@ export class LoginComponent implements OnInit {
   //Otp verification
 
   otpVerify(): void {
+    this.isLoading = true;
     if (this.otpDigit1 !== '' && this.otpDigit2 !== '' && this.otpDigit3 !== '' && this.otpDigit4 !== '') {
       const otp = `${this.otpDigit1}${this.otpDigit2}${this.otpDigit3}${this.otpDigit4}`;
       this._loginService.otpVerification(this.emailForVerification.value, otp).subscribe((data) => {
@@ -100,7 +105,9 @@ export class LoginComponent implements OnInit {
           this.isForgetPassword = false;
           this.isChangePassword = true;
         }
+        this.isLoading = false;
       }, (error) => {
+        this.isLoading = false;
         this.errorMsg3 = error?.error?.error;
         if (!this.errorMsg3) {
           this.snackBar.open("Please try again later", "", {
@@ -115,10 +122,12 @@ export class LoginComponent implements OnInit {
 
   resetPassword(): void {
     // this.isMailSent = true;
+    this.isLoading = true;
     this._loginService.sendOtp(this.emailForVerification.value).subscribe((data) => {
       if (data.isSent) {
         this.isMailSent = true;
       }
+      this.isLoading = false;
     }, (error) => {
       this.errorMsg2 = error?.error?.error;
       if (!this.errorMsg2) {
@@ -126,12 +135,14 @@ export class LoginComponent implements OnInit {
           duration: 2000
         });
       }
+      this.isLoading = false;
     })
   }
 
 
   //Updating the password
   createNewPassword(): void {
+    this.isLoading = true;
     if (this.newPassword.valid && this.confirmPassword.valid) {
       const body = {
         email: this.emailForVerification.value,
@@ -146,7 +157,9 @@ export class LoginComponent implements OnInit {
         this.snackBar.open('Password updated successfully', '', {
           "duration": 2000
         });
+        this.isLoading = false;
       }, (error) => {
+        this.isLoading = false;
         this.snackBar.open('Error occured while updating password', '', {
           "duration": 2000
         });
