@@ -15,7 +15,6 @@ export class MedicinesService {
   }
 
   addToCart(payload: { id: string | null, product: [{ medicineId: string, qty: number }] }): Observable<any> {
-    console.log(payload);
     return this._httpClient.post(`${this._configService.apiBaseUrl}/cart/add`, payload);
   }
 }

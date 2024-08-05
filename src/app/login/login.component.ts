@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
       password: this.loginFormGroup.value.password
     };
     this._loginService.login(body).subscribe((data) => {
-      console.log(data);
+
       const isLoggedIn = this.authService.addAuthentication(data.accessToken, data.userId);
       this.isLoading = false;
       if (isLoggedIn) {

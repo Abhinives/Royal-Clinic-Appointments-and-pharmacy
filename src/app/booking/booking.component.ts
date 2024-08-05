@@ -66,7 +66,7 @@ export class BookingComponent implements OnInit, AfterViewInit {
 
   constructor(private router: Router, private cdr: ChangeDetectorRef, private snackbar: MatSnackBar, private _dialog: MatDialog, private _formBuilder: FormBuilder, private authService: AuthService, private bookingService: BookingService) {
 
-    console.log(this.startHour);
+
     this.nextDate.setDate(this.currentDate.getDate() + 1);
     this.bookingFormGroup = this._formBuilder.group({
       firstName: ['', Validators.required],
@@ -102,7 +102,7 @@ export class BookingComponent implements OnInit, AfterViewInit {
           this.doctorDetails.push(information);
         })
       });
-      console.log(this.doctorDetails);
+
     })
 
     this.bookingService.getSpecialistDetails().subscribe((data) => {
@@ -143,7 +143,7 @@ export class BookingComponent implements OnInit, AfterViewInit {
 
       currentHour = (currentHour + 1) % 24; // Wrap around for next day if necessary
     }
-    console.log(this.defaultTimeSlot);
+
   }
   formatTime(hours: number, minutes: number): string {
     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
@@ -151,8 +151,7 @@ export class BookingComponent implements OnInit, AfterViewInit {
 
 
   updateTimeSlot(date: String, id: String): void {
-    console.log(date);
-    console.log(id);
+
     this.bookingService.getBookedSlots(id, date).subscribe((data) => {
       data.slots.forEach((slot: any) => {
         const findSlot = (this.defaultTimeSlot.find(time => time.startTime === slot));
@@ -165,7 +164,7 @@ export class BookingComponent implements OnInit, AfterViewInit {
 
   formatLocalDateToUTCString(date: any) {
     // Get local time components
-    console.log(date);
+
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
     const day = String(date.getDate()).padStart(2, '0');
@@ -233,9 +232,6 @@ export class BookingComponent implements OnInit, AfterViewInit {
     }
 
 
-    console.log(date);
-    console.log(this.formatLocalDateToUTCString(startTime));
-    console.log(this.formatLocalDateToUTCString(endTime));
 
     const dialog = this._dialog.open(DialogComponent, {
       width: '400px'
@@ -274,7 +270,7 @@ export class BookingComponent implements OnInit, AfterViewInit {
   }
 
   onTabChanged(event: any): void {
-    console.log(this.currentDate.toISOString().split('T')[0]);
+
     this.selectedTabIndex = event;
     let formattedDate = '';
     if (this.selectedTabIndex === 0) {
@@ -287,7 +283,7 @@ export class BookingComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       this.defaultTimeSlot = [];
       if (event === 0) {
-        console.log(event.index);
+
 
         this.fillDefaultTimeSlot(this.startHour);
 

@@ -20,7 +20,7 @@ export class MedicinesDialogComponent implements OnInit {
     })
   }
   ngOnInit(): void {
-    console.log(this.data);
+
     this.price = this.data.cost;
 
     // this.quantity.valueChanges.subscribe((data) => {

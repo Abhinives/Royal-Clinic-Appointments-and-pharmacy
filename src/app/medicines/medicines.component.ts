@@ -37,7 +37,7 @@ export class MedicinesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((data) => {
       if (data) {
-        console.log(data);
+
         data = {
           ...data,
           id: this.userId
@@ -52,7 +52,6 @@ export class MedicinesComponent implements OnInit {
           });
         })
         this.cartItems.push(data);
-        console.log(this.cartItems);
       }
     })
   }

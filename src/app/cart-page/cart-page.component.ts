@@ -34,7 +34,7 @@ export class CartPageComponent implements OnInit {
       this.getCarts();
     });
     this.cartForm.valueChanges.subscribe((data) => {
-      console.log(data);
+
     })
     this.selectedIndices.valueChanges.subscribe((data) => {
       this.updateTotalCost();
@@ -47,7 +47,7 @@ export class CartPageComponent implements OnInit {
     let cnt = 0;
     this.totalCost = 0;
     data.forEach((d: any, index: number) => {
-      console.log(d);
+
       if (d) {
         if (this.quantities.at(index).valid) {
           this.totalCost += this.carts.carts[index].actualCost * this.quantities.at(index).value;
@@ -71,7 +71,7 @@ export class CartPageComponent implements OnInit {
       });
 
 
-      console.log(this.cartForm.value);
+
     })
   }
   addQuantityControl(quantity: number, total: number): void {
@@ -86,7 +86,7 @@ export class CartPageComponent implements OnInit {
           qty: value ?? 0
         };
         this.cartPageService.updateCart(this.userId, payload).subscribe((data) => {
-          console.log("updated");
+
           this.getCarts();
         })
       }
@@ -99,7 +99,7 @@ export class CartPageComponent implements OnInit {
   deleteProduct(index: number): void {
     const medicineId = this.carts.carts[index].medicineId;
     this.cartPageService.deleteProductFromCart(this.userId, medicineId).subscribe((data) => {
-      console.log("Deleted successfully");
+
       this.getCarts();
     })
   }
@@ -114,9 +114,9 @@ export class CartPageComponent implements OnInit {
           finalCarts.push(this.carts.carts[index]);
         }
       });
-      console.log(finalCarts);
+
       const serializedData = JSON.stringify(finalCarts);
-      console.log(serializedData);
+
       this.router.navigate(['/services/medicines/checkout'], { queryParams: { data: serializedData } });
     }
 

@@ -48,7 +48,7 @@ export class MybookingsComponent implements OnInit {
   getBookings(): void {
     this.isLoading = true;
     this.mybookingsService.getBookings(this.userId).subscribe((data) => {
-      console.log(data);
+
       this.tableData = [];
       this.dataSource = [];
       data.forEach((info: any) => {
@@ -65,14 +65,15 @@ export class MybookingsComponent implements OnInit {
           isCancel: true,
           slotId: info.slotId
         };
-        if (new Date(updatedData.date).getUTCDate() < new Date().getUTCDate()) {
-          console.log("goin1");
+
+        if (new Date(updatedData.date).getUTCDate() < new Date().getUTCDate() || (new Date(updatedData.date).getUTCMonth() < new Date().getUTCMonth())) {
+
           updatedData = {
             ...updatedData,
             isCancel: false
           }
         }
-        console.log(updatedData);
+
         if (new Date(updatedData.date).getUTCDate() === new Date().getUTCDate() && new Date(updatedData.date).getUTCMonth() === new Date().getUTCMonth()) {
 
           if (updatedData.startTime < new Date().getHours()) {
@@ -80,16 +81,16 @@ export class MybookingsComponent implements OnInit {
               ...updatedData,
               isCancel: false
             }
-            console.log(updatedData);
+
           }
-          console.log("goin2");
+
         }
 
         this.tableData.push(updatedData);
       });
       this.dataSource = this.tableData;
       this.isLoading = false;
-      console.log(this.dataSource);
+
     }, (error) => {
       this.isLoading = false;
       this.snackBar.open("Please try again later", "", {

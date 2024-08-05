@@ -39,11 +39,11 @@ export class CheckoutPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.paymentFormGroup.valueChanges.subscribe((data) => {
-      console.log(data);
+
     })
     this._activatedRoute.queryParams.subscribe((data) => {
       const carts = JSON.parse(data['data']);
-      console.log(carts);
+
       this.carts = carts;
     });
     this.carts.forEach((cart) => {
@@ -54,13 +54,11 @@ export class CheckoutPageComponent implements OnInit {
 
       this.checkoutPageService.getAddresses(this.userId).subscribe((data) => {
         this.addresses = data.address;
-        console.log(this.addresses);
+
       })
     });
 
-    this.addressFormControl.valueChanges.subscribe((data) => {
-      console.log(data);
-    })
+
   }
 
 

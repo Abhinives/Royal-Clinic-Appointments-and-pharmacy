@@ -61,7 +61,7 @@ export class ProfileComponent implements OnInit {
       this._profileService.getProfile(this.userId).subscribe((data) => {
 
         this.information = data.patientInfo;
-        console.log(this.information);
+
       });
 
     })
@@ -76,7 +76,7 @@ export class ProfileComponent implements OnInit {
       this.personalInfo.get('lastName')?.setValue(this.information.lastName);
       this.personalInfo.get('gender')?.setValue(this.information.gender);
       this.personalInfo.get('age')?.setValue(this.information.age);
-      console.log(this.personalInfo.value);
+
     }
   }
 
@@ -116,7 +116,7 @@ export class ProfileComponent implements OnInit {
       this.addressInfo.get('phone')?.setValue(address.phone);
       this.addressInfo.get('landmark')?.setValue(address.landmark ?? '');
     }
-    console.log(this.addressInfo.value);
+
   }
 
   addAddress(): void {

@@ -4,7 +4,7 @@ export function emailValidator(control: FormControl): { [key: string]: boolean }
 
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const valid = emailRegex.test(control.value);
-    console.log(valid);
+
     return valid ? null : { invalidEmail: true };
 }
 

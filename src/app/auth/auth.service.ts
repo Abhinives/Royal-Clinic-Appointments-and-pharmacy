@@ -14,9 +14,9 @@ export class AuthService {
   constructor() {
     const token = sessionStorage.getItem("accessToken");
     const userId = sessionStorage.getItem("userId");
-    console.log(token);
+
     if (token) {
-      console.log("asdf");
+
       this.headers = this.headers.set("accessToken", token);
       this.accessToken$.next(token);
       this.loggedIn$.next(true);
@@ -41,7 +41,6 @@ export class AuthService {
     sessionStorage.setItem('userId', userId);
     this.accessToken$.next(accessToken);
     this.headers = this.headers.set("accessToken", accessToken);
-    console.log(this.headers.get("accessToken"));
     this.loggedIn$.next(true);
     this.userId$.next(userId);
     return true;

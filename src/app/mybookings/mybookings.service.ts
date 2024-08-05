@@ -16,7 +16,7 @@ export class MybookingsService {
 
 
   getBookings(patientId: string | null): Observable<any> {
-    console.log(this.authService.headers);
+
     return this.httpClient.get<any[]>(`${this.configService.apiBaseUrl}/patient/mybookings/${patientId}`, { headers: this.authService.headers })
       .pipe(
         mergeMap(bookings => {
